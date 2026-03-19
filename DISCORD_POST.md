@@ -265,3 +265,47 @@ After both players confirm:
 - If you're not getting DMs, check Discord Settings → Privacy & Safety → allow DMs from server members, and Settings → Chat → enable embeds
 
 Questions? Ask in the server. Good luck out there. 🎲
+
+
+--- MESSAGE 11 ---
+
+## 🛍️ The SouthSeer Shop — How to Browse & Order
+
+We've built our store directly into Discord so you never have to leave the server to shop. Here's everything you need to know.
+
+**Browsing products**
+To see everything currently available:
+`/shop list`
+
+Want to filter by category?
+`/shop list category:minis`
+`/shop list category:singles`
+`/shop list category:digital`
+
+Each product shows the name, description, price, type (physical or digital), and how many are in stock. Out-of-stock items won't appear.
+
+You can also browse by clicking the **Order** button directly on any product listing we post in the shop channel — no command needed.
+
+**Placing an order**
+`/shop order product_id:12`
+
+You can add a note (special instructions, preferred paint scheme, pickup vs. shipping, etc.):
+`/shop order product_id:12 note:pickup preferred`
+
+Once placed, you'll get a **DM confirmation** with your order details and a reference number. We'll get a notification on our end at the same time.
+
+> 📦 Payment is handled separately — PayPal, Venmo, or cash in person. Include your order number when you send payment so we can match it up.
+
+**Checking your orders**
+See all your active orders:
+`/shop status`
+
+Check a specific order by ID:
+`/shop status order_id:7`
+
+Orders move through these stages:
+**Pending** → **Confirmed** → **Paid** → **Shipped** → **Delivered**
+
+You'll get a DM each time your order status changes, so you'll always know where things stand.
+
+> 💬 Questions about an order? DM us directly or ask in the server. Include your order number and we'll sort it out.
