@@ -34,8 +34,9 @@ grafana/
 logs/
 node_modules/
 SECURITY.md
-spellbot-sm.png
-spellbot.png
+seer-sm.png
+seer-pfp.png
+seer.png
 sql/
 states/
 terraform.tfvars

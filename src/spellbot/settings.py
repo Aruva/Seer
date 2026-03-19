@@ -161,13 +161,13 @@ class Settings:
     @property
     def ICO_URL(self) -> str:
         return self.workaround_over_eager_caching(
-            f"{self.CONTENT_ROOT}/spellbot/main/spellbot-sm.png",
+            "https://raw.githubusercontent.com/Aruva/Seer/main/seer-sm.png",
         )
 
     @property
     def THUMB_URL(self) -> str:
         return self.workaround_over_eager_caching(
-            f"{self.CONTENT_ROOT}/spellbot/main/spellbot.png",
+            "https://raw.githubusercontent.com/Aruva/Seer/main/seer.png",
         )
 
     def queer(self, guild_xid: int | None) -> bool:  # pragma: no cover
