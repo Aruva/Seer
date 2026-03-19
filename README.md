@@ -1,4 +1,4 @@
-# SouthSeer
+# Seer
 
 A Discord bot for running competitive leagues and tracking results — built for **Magic: The Gathering**, **tabletop wargames**, and **small community shops**.
 
@@ -22,9 +22,9 @@ What started as "let me just add a leaderboard" turned into a full-featured leag
 
 ---
 
-## What SouthSeer Does
+## What Seer Does
 
-SouthSeer tracks competitive play across three game systems and provides a built-in shop for small Discord-based stores.
+Seer tracks competitive play across three game systems and provides a built-in shop for small Discord-based stores.
 
 ### Magic: The Gathering — Commander (EDH)
 
