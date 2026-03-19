@@ -1,0 +1,4 @@
+# serializer version: 1
+# name: TestCogLookingForGameJoinButton.test_join_with_show_points
+  <GameView timeout=None children=2>
+# ---

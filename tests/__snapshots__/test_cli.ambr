@@ -1,0 +1,20 @@
+# serializer version: 1
+# name: TestCLI.test_help
+  '''
+  Usage: main [OPTIONS]
+  
+  Options:
+    -l, --log-level [CRITICAL|ERROR|WARNING|INFO|DEBUG]
+                                    INFO is not set, can also be set by the
+                                    LOG_LEVEL environment variable.
+    -d, --dev                       Development mode, automatically reload bot
+                                    when source changes
+    -g, --debug                     Enable detailed asyncio debugging
+    -m, --mock-games                Produce mock game urls instead of real ones
+    -a, --api                       Start the API web server instead of the bot
+    -p, --port INTEGER              Use the given port number to serve the API
+    --version                       Show the version and exit.
+    --help                          Show this message and exit.
+  
+  '''
+# ---

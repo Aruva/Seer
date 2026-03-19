@@ -1,0 +1,50 @@
+services:
+
+  # ── PostgreSQL database ──────────────────────────────────────────────────────
+  db:
+    image: postgres:17
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: southseer
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d southseer"]
+      interval: 5s
+      timeout: 5s
+      retries: 12
+
+  # ── One-shot migration runner ────────────────────────────────────────────────
+  # Runs "alembic upgrade head" before the bot starts.
+  # Safe to re-run — alembic is idempotent if already at head.
+  migrate:
+    build: .
+    command: >
+      python3 /upgrade.py
+      postgresql://postgres:postgres@db:5432/southseer
+      head
+    depends_on:
+      db:
+        condition: service_healthy
+    env_file: .env
+    restart: on-failure
+
+  # ── SouthSeer bot ────────────────────────────────────────────────────────────
+  bot:
+    build: .
+    command: spellbot
+    restart: unless-stopped
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+    env_file: .env
+    environment:
+      # Override DATABASE_URL so the bot connects to the compose db service.
+      # (The value in .env is only used if you run the bot outside of Docker.)
+      DATABASE_URL: "postgresql://postgres:postgres@db:5432/southseer"
+      DD_TRACE_ENABLED: "false"
+
+volumes:
+  db_data:

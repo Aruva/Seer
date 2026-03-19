@@ -1,0 +1,19 @@
+[run]
+branch = True
+source = .
+omit =
+    src/spellbot/_version.py
+    src/spellbot/migrations/env.py
+    src/spellbot/web/server.py
+    shell.py
+
+[report]
+ignore_errors = True
+exclude_lines =
+    pragma: no cover
+    raise NotImplementedError
+    if __name__ == .__main__.:
+    if TYPE_CHECKING:
+
+[html]
+skip_covered = True
