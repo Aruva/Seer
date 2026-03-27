@@ -2,8 +2,8 @@ from __future__ import annotations
 
 import pytest
 
-from spellbot.database import DatabaseSession
-from spellbot.services import WatchesService
+from seer.database import DatabaseSession
+from seer.services import WatchesService
 from tests.factories import GuildFactory, UserFactory, WatchFactory
 
 pytestmark = pytest.mark.use_db

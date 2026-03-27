@@ -1,1 +1,1 @@
-root_domain = "app.spellbot.io"
+root_domain = "southsidestudioandhobbies.com"

@@ -1,6 +1,6 @@
 # ECS Cluster
 resource "aws_ecs_cluster" "main" {
-  name = "spellbot-cluster"
+  name = "seer-cluster"
 
   setting {
     name  = "containerInsights"
@@ -8,7 +8,7 @@ resource "aws_ecs_cluster" "main" {
   }
 
   tags = {
-    Name = "spellbot-cluster"
+    Name = "seer-cluster"
   }
 }
 

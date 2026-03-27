@@ -6,11 +6,9 @@ A Discord bot for running competitive leagues and tracking results — built for
 
 ## Acknowledgments
 
-Seer is a fork of [SpellBot](https://github.com/lexicalunit/spellbot) by **Amy Troschinetz** ([@lexicalunit](https://github.com/lexicalunit)). SpellBot is a beautifully engineered Discord bot for organizing Magic: The Gathering games via SpellTable, and it served as the foundation for everything SouthSeer has become. The original architecture — the migration system, the service layer, the cog structure, the persistent view pattern — all of that is Amy's work. SouthSeer would not exist without it.
+SouthSeer is built on the foundation of [Seer](https://github.com/Southsidestudio/Seer) by **Amy Troschinetz**. The original Seer is a beautifully engineered Discord bot for organizing Magic: The Gathering games via SpellTable, and it served as the foundation for everything SouthSeer has become. The original architecture — the migration system, the service layer, the cog structure, the persistent view pattern — all of that is Amy's work. SouthSeer would not exist without it.
 
-SpellBot is released under the [MIT License](LICENSE.md), and we are deeply grateful for the open-source community that makes projects like this possible.
-
-If you're looking for a SpellTable matchmaking bot, please check out the original: **https://github.com/lexicalunit/spellbot**
+SouthSeer is released under the [MIT License](LICENSE.md), the same license as the original Seer project, and we are deeply grateful for the open-source community that makes projects like this possible.
 
 ---
 
@@ -96,7 +94,7 @@ Your bot application needs **Privileged Gateway Intents** enabled in the Develop
 
 ## Architecture
 
-SouthSeer inherits SpellBot's clean layered architecture:
+SouthSeer inherits Seer's clean layered architecture:
 
 - **Cogs** — Discord command handlers (one file per command group)
 - **Services** — Business logic and database operations
@@ -110,7 +108,7 @@ The bot runs as a Docker Compose stack: PostgreSQL database → Alembic migratio
 
 ## License
 
-SouthSeer is released under the [MIT License](LICENSE.md), the same license as the original SpellBot project.
+SouthSeer is released under the [MIT License](LICENSE.md), the same license as the original Seer project.
 
-**Original work:** Copyright (c) Amy Troschinetz — [spellbot@lexicalunit.com](mailto:spellbot@lexicalunit.com)
+**Original work:** Copyright (c) Amy Troschinetz
 **Modified work:** Copyright (c) Southside Studio and Hobbies

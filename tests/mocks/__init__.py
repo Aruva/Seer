@@ -7,7 +7,7 @@ from unittest.mock import AsyncMock, MagicMock
 
 import discord
 
-from spellbot.models import Channel, Guild, User
+from seer.models import Channel, Guild, User
 
 if TYPE_CHECKING:
     from collections.abc import Generator
@@ -87,7 +87,7 @@ def mock_operations(
 
     Example usage:
 
-        from spellbot.interactions import lfg_interaction
+        from seer.interactions import lfg_interaction
 
         with mock_operations(lfg_interaction):
             lfg_interaction.safe_get_partial_message.return_value = MagicMock()
@@ -98,7 +98,7 @@ def mock_operations(
     """
     import pytest
 
-    from spellbot import operations
+    from seer import operations
 
     _users: list[discord.User] = users or []
 
@@ -131,7 +131,7 @@ def mock_operations(
 # def build_client_user() -> discord.User:
 #     client_user = MagicMock(spec=discord.User)
 #     client_user.id = CLIENT_USER_ID
-#     client_user.display_name = "SpellBot"
+#     client_user.display_name = "Seer"
 #     client_user.mention = f"<@{client_user.id}>"
 #     client_user.top_role = None
 #     return client_user

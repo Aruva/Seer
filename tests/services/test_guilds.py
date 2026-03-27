@@ -4,9 +4,9 @@ from unittest.mock import MagicMock
 
 import pytest
 
-from spellbot.database import DatabaseSession
-from spellbot.models import Guild, GuildAward
-from spellbot.services import GuildsService
+from seer.database import DatabaseSession
+from seer.models import Guild, GuildAward
+from seer.services import GuildsService
 from tests.factories import GuildAwardFactory, GuildFactory
 
 pytestmark = pytest.mark.use_db

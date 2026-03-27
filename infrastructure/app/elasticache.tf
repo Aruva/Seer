@@ -1,17 +1,17 @@
 # ElastiCache subnet group
 resource "aws_elasticache_subnet_group" "main" {
-  name       = "spellbot-cache-subnet"
+  name       = "seer-cache-subnet"
   subnet_ids = module.vpc.elasticache_subnets
 
   tags = {
-    Name = "spellbot-cache-subnet-group"
+    Name = "seer-cache-subnet-group"
   }
 }
 
 # ElastiCache Valkey cluster - minimal single node
 resource "aws_elasticache_replication_group" "main" {
-  replication_group_id = "spellbot-valkey"
-  description          = "SpellBot Valkey cluster"
+  replication_group_id = "seer-valkey"
+  description          = "Seer Valkey cluster"
 
   # Minimal configuration
   node_type            = "cache.t4g.micro"
@@ -43,6 +43,6 @@ resource "aws_elasticache_replication_group" "main" {
   transit_encryption_enabled = false
 
   tags = {
-    Name = "spellbot-valkey"
+    Name = "seer-valkey"
   }
 }

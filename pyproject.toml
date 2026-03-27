@@ -1,5 +1,5 @@
 [project]
-authors = [{name = "Amy Troschinetz", email = "spellbot@lexicalunit.com"}]
+authors = [{name = "Southside Studio and Hobbies", email = "info@southsidestudioandhobbies.com"}]
 classifiers = [
   "Development Status :: 4 - Beta",
   "Intended Audience :: End Users/Desktop",
@@ -47,17 +47,17 @@ dependencies = [
 description = "SouthSeer: League tracker for Magic: The Gathering and tabletop wargames"
 keywords = ["discord", "magic", "bot", "mtg", "league", "edh", "commander", "wargames"]
 license = {text = "MIT"}
-name = "spellbot"
+name = "seer"
 readme = "README.md"
 requires-python = "<4,>=3.13"
 version = "17.4.0"
 
 [project.urls]
 homepage = "https://southsidestudioandhobbies.com"
-repository = "https://github.com/lexicalunit/spellbot"
+repository = "https://github.com/Southsidestudio/Seer"
 
 [project.scripts]
-spellbot = "spellbot:main"
+seer = "seer:main"
 
 [dependency-groups]
 dev = [
@@ -110,7 +110,7 @@ exclude = [
 
 [tool.hatch.build.targets.wheel]
 exclude = ["tests"]
-packages = ["src/spellbot"]
+packages = ["src/seer"]
 
 [tool.pyright]
 enableTypeIgnoreComments = true
@@ -193,8 +193,8 @@ ignore = [
   "TD003",
 ]
 [tool.ruff.lint.per-file-ignores]
-"src/spellbot/migrations/*" = ["INP001"]
-"src/spellbot/operations.py" = ["RET504"]
+"src/seer/migrations/*" = ["INP001"]
+"src/seer/operations.py" = ["RET504"]
 "tests/*" = [
   "EM101",
   "PT004",

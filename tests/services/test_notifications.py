@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import pytest
 
-from spellbot.services import NotificationData, NotificationsService
+from seer.services import NotificationData, NotificationsService
 
 pytestmark = pytest.mark.use_db
 

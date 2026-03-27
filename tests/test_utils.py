@@ -6,8 +6,8 @@ from unittest.mock import MagicMock
 import discord
 import pytest
 
-from spellbot.errors import AdminOnlyError, GuildOnlyError
-from spellbot.utils import (
+from seer.errors import AdminOnlyError, GuildOnlyError
+from seer.utils import (
     bot_can_delete_channel,
     bot_can_delete_message,
     bot_can_manage_channels,
@@ -26,7 +26,7 @@ from spellbot.utils import (
 if TYPE_CHECKING:
     from pytest_mock import MockerFixture
 
-    from spellbot.settings import Settings
+    from seer.settings import Settings
 
 
 class TestUtilsLogging:
@@ -198,7 +198,7 @@ class TestUtilsBotCanDeleteMessage:
 class TestUtilsBotCanSendMessages:
     def test_happy_path(self, mocker: MockerFixture) -> None:
         can_send = discord.Permissions(discord.Permissions.send_messages.flag)
-        mocker.patch("spellbot.utils.safe_permissions_for", return_value=can_send)
+        mocker.patch("seer.utils.safe_permissions_for", return_value=can_send)
         channel = MagicMock(spec=discord.TextChannel)
         channel.guild = MagicMock(spec=discord.Guild)
         assert bot_can_send_messages(channel)
@@ -219,14 +219,14 @@ class TestUtilsBotCanSendMessages:
         assert not bot_can_send_messages(channel)
 
     def test_no_permissions(self, mocker: MockerFixture) -> None:
-        mocker.patch("spellbot.utils.safe_permissions_for", return_value=None)
+        mocker.patch("seer.utils.safe_permissions_for", return_value=None)
         channel = MagicMock(spec=discord.TextChannel)
         channel.guild = MagicMock(spec=discord.Guild)
         channel.guild.me = MagicMock()
         assert not bot_can_send_messages(channel)
 
     def test_bad_permissions(self, mocker: MockerFixture) -> None:
-        mocker.patch("spellbot.utils.safe_permissions_for", return_value=discord.Permissions())
+        mocker.patch("seer.utils.safe_permissions_for", return_value=discord.Permissions())
         channel = MagicMock(spec=discord.TextChannel)
         channel.guild = MagicMock(spec=discord.Guild)
         assert not bot_can_send_messages(channel)
@@ -433,7 +433,7 @@ class TestUtilsIsAdmin:
 
 class TestUtilsIsMod:
     def test_happy_path(self, mocker: MockerFixture) -> None:
-        stub = mocker.patch("spellbot.utils.user_can_moderate")
+        stub = mocker.patch("seer.utils.user_can_moderate")
         interaction = MagicMock(spec=discord.Interaction)
         interaction.guild = MagicMock(spec=discord.Guild)
         interaction.channel = MagicMock(spec=discord.TextChannel)

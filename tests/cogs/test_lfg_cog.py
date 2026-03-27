@@ -7,25 +7,25 @@ from unittest.mock import ANY, MagicMock, patch
 import discord
 import pytest
 
-from spellbot.actions import lfg_action
-from spellbot.cogs import LookingForGameCog
-from spellbot.database import DatabaseSession
-from spellbot.enums import GameFormat, GameService
-from spellbot.models import Channel, Game, GameStatus, Queue, User
-from spellbot.views import GameView
+from seer.actions import lfg_action
+from seer.cogs import LookingForGameCog
+from seer.database import DatabaseSession
+from seer.enums import GameFormat, GameService
+from seer.models import Channel, Game, GameStatus, Queue, User
+from seer.views import GameView
 from tests.mixins import InteractionMixin
 from tests.mocks import mock_discord_object, mock_operations
 
 if TYPE_CHECKING:
     from collections.abc import Callable
 
-    from spellbot.client import SpellBot
+    from seer.client import Seer
 
 pytestmark = pytest.mark.use_db
 
 
 @pytest.fixture
-def cog(bot: SpellBot) -> LookingForGameCog:
+def cog(bot: Seer) -> LookingForGameCog:
     return LookingForGameCog(bot)
 
 
@@ -113,9 +113,9 @@ class TestCogLookingForGame(InteractionMixin):
                         "name": "Started at",
                         "value": f"<t:{game.started_at_timestamp}>",
                     },
-                    {"inline": False, "name": "Support SpellBot", "value": ANY},
+                    {"inline": False, "name": "Support Seer", "value": ANY},
                 ],
-                "footer": {"text": f"SpellBot Game ID: #SB{game.id} — Service: Cockatrice"},
+                "footer": {"text": f"Seer Game ID: #SB{game.id} — Service: Cockatrice"},
                 "thumbnail": {"url": self.settings.THUMB_URL},
                 "title": "**Your game is ready!**",
                 "type": "rich",
@@ -240,7 +240,7 @@ class TestCogLookingForGameJoinButton(InteractionMixin):
         with (
             mock_operations(lfg_action, users=[mock_discord_object(user)]),
             patch(
-                "spellbot.views.lfg_view.safe_original_response",
+                "seer.views.lfg_view.safe_original_response",
                 return_value=message,
             ),
         ):
@@ -267,9 +267,9 @@ class TestCogLookingForGameJoinButton(InteractionMixin):
                     },
                     {"inline": True, "name": "Format", "value": "Commander"},
                     {"inline": True, "name": "Updated at", "value": ANY},
-                    {"inline": False, "name": "Support SpellBot", "value": ANY},
+                    {"inline": False, "name": "Support Seer", "value": ANY},
                 ],
-                "footer": {"text": f"SpellBot Game ID: #SB{game.id} — Service: SpellTable"},
+                "footer": {"text": f"Seer Game ID: #SB{game.id} — Service: SpellTable"},
                 "thumbnail": {"url": self.settings.THUMB_URL},
                 "title": "**Waiting for 3 more players to join...**",
                 "type": "rich",
@@ -285,7 +285,7 @@ class TestCogLookingForGameJoinButton(InteractionMixin):
         with (
             mock_operations(lfg_action, users=[mock_discord_object(user)]),
             patch(
-                "spellbot.views.lfg_view.safe_original_response",
+                "seer.views.lfg_view.safe_original_response",
                 return_value=None,
             ),
         ):

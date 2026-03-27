@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from spellbot.enums import (
+from seer.enums import (
     GAME_BRACKET_ORDER,
     GAME_FORMAT_ORDER,
     GAME_SERVICE_ORDER,

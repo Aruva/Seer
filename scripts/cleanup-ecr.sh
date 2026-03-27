@@ -9,7 +9,7 @@
 #   ./scripts/cleanup-ecr.sh [days] [repository-name]
 #
 # Examples:
-#   ./scripts/cleanup-ecr.sh 180 spellbot-app  # Delete images older than 180 days
+#   ./scripts/cleanup-ecr.sh 180 seer-app  # Delete images older than 180 days
 #   ./scripts/cleanup-ecr.sh 90                # Delete images older than 90 days (default repo)
 #
 
@@ -17,7 +17,7 @@ set -euo pipefail
 
 # Configuration
 DEFAULT_DAYS=180
-DEFAULT_REPOSITORY="spellbot-app"
+DEFAULT_REPOSITORY="seer-app"
 AWS_REGION="${AWS_REGION:-us-east-1}"
 
 # Parse arguments

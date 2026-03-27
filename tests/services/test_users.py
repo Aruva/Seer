@@ -4,9 +4,9 @@ from unittest.mock import ANY, MagicMock
 
 import pytest
 
-from spellbot.database import DatabaseSession
-from spellbot.models import Block, Game, Guild, Queue, User, Watch
-from spellbot.services import UsersService
+from seer.database import DatabaseSession
+from seer.models import Block, Game, Guild, Queue, User, Watch
+from seer.services import UsersService
 from tests.factories import UserFactory
 
 pytestmark = pytest.mark.use_db

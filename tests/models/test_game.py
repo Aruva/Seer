@@ -7,12 +7,12 @@ from unittest.mock import ANY, MagicMock
 import discord
 import pytest
 
-from spellbot.enums import GameBracket, GameService
-from spellbot.models import Game, GameStatus
-from spellbot.operations import VoiceChannelSuggestion
+from seer.enums import GameBracket, GameService
+from seer.models import Game, GameStatus
+from seer.operations import VoiceChannelSuggestion
 
 if TYPE_CHECKING:
-    from spellbot.settings import Settings
+    from seer.settings import Settings
     from tests.fixtures import Factories
 
 pytestmark = pytest.mark.use_db
@@ -113,13 +113,13 @@ class TestModelGame:
             {"inline": True, "name": "Updated at", "value": "<t:1635638400>"},
         ]
         expected_fields.append(
-            {"inline": False, "name": "Support SpellBot", "value": ANY},
+            {"inline": False, "name": "Support Seer", "value": ANY},
         )
         assert game.to_embed().to_dict() == {
             "color": settings.EMPTY_EMBED_COLOR,
             "description": description,
             "fields": expected_fields,
-            "footer": {"text": f"SpellBot Game ID: #SB{game.id} — Service: {service}"},
+            "footer": {"text": f"Seer Game ID: #SB{game.id} — Service: {service}"},
             "thumbnail": {
                 "url": settings.THUMB_URL,
             },
@@ -141,9 +141,9 @@ class TestModelGame:
                 {"inline": False, "name": "Players", "value": f"• <@{player.xid}> ({player.name})"},
                 {"inline": True, "name": "Format", "value": "Commander"},
                 {"inline": True, "name": "Updated at", "value": ANY},
-                {"inline": False, "name": "Support SpellBot", "value": ANY},
+                {"inline": False, "name": "Support Seer", "value": ANY},
             ],
-            "footer": {"text": f"SpellBot Game ID: #SB{game.id} — Service: SpellTable"},
+            "footer": {"text": f"Seer Game ID: #SB{game.id} — Service: SpellTable"},
             "thumbnail": {
                 "url": settings.THUMB_URL,
             },
@@ -165,9 +165,9 @@ class TestModelGame:
                 {"inline": False, "name": "Players", "value": "**1 player name is hidden**"},
                 {"inline": True, "name": "Format", "value": "Commander"},
                 {"inline": True, "name": "Updated at", "value": ANY},
-                {"inline": False, "name": "Support SpellBot", "value": ANY},
+                {"inline": False, "name": "Support Seer", "value": ANY},
             ],
-            "footer": {"text": f"SpellBot Game ID: #SB{game.id} — Service: SpellTable"},
+            "footer": {"text": f"Seer Game ID: #SB{game.id} — Service: SpellTable"},
             "thumbnail": {
                 "url": settings.THUMB_URL,
             },
@@ -194,9 +194,9 @@ class TestModelGame:
                 {"inline": False, "name": "Players", "value": "**2 player names are hidden**"},
                 {"inline": True, "name": "Format", "value": "Commander"},
                 {"inline": True, "name": "Updated at", "value": ANY},
-                {"inline": False, "name": "Support SpellBot", "value": ANY},
+                {"inline": False, "name": "Support Seer", "value": ANY},
             ],
-            "footer": {"text": f"SpellBot Game ID: #SB{game.id} — Service: SpellTable"},
+            "footer": {"text": f"Seer Game ID: #SB{game.id} — Service: SpellTable"},
             "thumbnail": {
                 "url": settings.THUMB_URL,
             },
@@ -222,9 +222,9 @@ class TestModelGame:
                 {"inline": False, "name": "Players", "value": f"• <@{player.xid}> ({player.name})"},
                 {"inline": True, "name": "Format", "value": "Commander"},
                 {"inline": True, "name": "Updated at", "value": ANY},
-                {"inline": False, "name": "Support SpellBot", "value": ANY},
+                {"inline": False, "name": "Support Seer", "value": ANY},
             ],
-            "footer": {"text": f"SpellBot Game ID: #SB{game.id} — Service: SpellTable"},
+            "footer": {"text": f"Seer Game ID: #SB{game.id} — Service: SpellTable"},
             "thumbnail": {
                 "url": settings.THUMB_URL,
             },
@@ -247,9 +247,9 @@ class TestModelGame:
                 {"inline": False, "name": "Players", "value": f"• <@{player.xid}> ({player.name})"},
                 {"inline": True, "name": "Format", "value": "Commander"},
                 {"inline": True, "name": "Updated at", "value": ANY},
-                {"inline": False, "name": "Support SpellBot", "value": ANY},
+                {"inline": False, "name": "Support Seer", "value": ANY},
             ],
-            "footer": {"text": f"SpellBot Game ID: #SB{game.id} — Service: SpellTable"},
+            "footer": {"text": f"Seer Game ID: #SB{game.id} — Service: SpellTable"},
             "thumbnail": {
                 "url": settings.THUMB_URL,
             },
@@ -275,9 +275,9 @@ class TestModelGame:
                 {"inline": False, "name": "Players", "value": f"• <@{player.xid}> ({player.name})"},
                 {"inline": True, "name": "Format", "value": "Commander"},
                 {"inline": True, "name": "Updated at", "value": ANY},
-                {"inline": False, "name": "Support SpellBot", "value": ANY},
+                {"inline": False, "name": "Support Seer", "value": ANY},
             ],
-            "footer": {"text": f"SpellBot Game ID: #SB{game.id} — Service: SpellTable"},
+            "footer": {"text": f"Seer Game ID: #SB{game.id} — Service: SpellTable"},
             "thumbnail": {
                 "url": settings.THUMB_URL,
             },
@@ -318,9 +318,9 @@ class TestModelGame:
                 },
                 {"inline": True, "name": "Format", "value": "Commander"},
                 {"inline": True, "name": "Started at", "value": "<t:1635638400>"},
-                {"inline": False, "name": "Support SpellBot", "value": ANY},
+                {"inline": False, "name": "Support Seer", "value": ANY},
             ],
-            "footer": {"text": f"SpellBot Game ID: #SB{game.id} — Service: SpellTable"},
+            "footer": {"text": f"Seer Game ID: #SB{game.id} — Service: SpellTable"},
             "thumbnail": {"url": settings.THUMB_URL},
             "title": "**Your game is ready!**",
             "type": "rich",
@@ -345,9 +345,9 @@ class TestModelGame:
                 },
                 {"inline": True, "name": "Format", "value": "Commander"},
                 {"inline": True, "name": "Started at", "value": "<t:1635638400>"},
-                {"inline": False, "name": "Support SpellBot", "value": ANY},
+                {"inline": False, "name": "Support Seer", "value": ANY},
             ],
-            "footer": {"text": f"SpellBot Game ID: #SB{game.id} — Service: SpellTable"},
+            "footer": {"text": f"Seer Game ID: #SB{game.id} — Service: SpellTable"},
             "thumbnail": {"url": settings.THUMB_URL},
             "title": "**Your game is ready!**",
             "type": "rich",
@@ -387,9 +387,9 @@ class TestModelGame:
                 },
                 {"inline": True, "name": "Format", "value": "Commander"},
                 {"inline": True, "name": "Started at", "value": "<t:1635638400>"},
-                {"inline": False, "name": "Support SpellBot", "value": ANY},
+                {"inline": False, "name": "Support Seer", "value": ANY},
             ],
-            "footer": {"text": f"SpellBot Game ID: #SB{game.id} — Service: Not any"},
+            "footer": {"text": f"Seer Game ID: #SB{game.id} — Service: Not any"},
             "thumbnail": {"url": settings.THUMB_URL},
             "title": "**Your game is ready!**",
             "type": "rich",
@@ -413,9 +413,9 @@ class TestModelGame:
                 },
                 {"inline": True, "name": "Format", "value": "Commander"},
                 {"inline": True, "name": "Started at", "value": "<t:1635638400>"},
-                {"inline": False, "name": "Support SpellBot", "value": ANY},
+                {"inline": False, "name": "Support Seer", "value": ANY},
             ],
-            "footer": {"text": f"SpellBot Game ID: #SB{game.id} — Service: Not any"},
+            "footer": {"text": f"Seer Game ID: #SB{game.id} — Service: Not any"},
             "thumbnail": {"url": settings.THUMB_URL},
             "title": "**Your game is ready!**",
             "type": "rich",
@@ -455,9 +455,9 @@ class TestModelGame:
                 },
                 {"inline": True, "name": "Format", "value": "Commander"},
                 {"inline": True, "name": "Started at", "value": "<t:1635638400>"},
-                {"inline": False, "name": "Support SpellBot", "value": ANY},
+                {"inline": False, "name": "Support Seer", "value": ANY},
             ],
-            "footer": {"text": f"SpellBot Game ID: #SB{game.id} — Service: MTG Arena"},
+            "footer": {"text": f"Seer Game ID: #SB{game.id} — Service: MTG Arena"},
             "thumbnail": {"url": settings.THUMB_URL},
             "title": "**Your game is ready!**",
             "type": "rich",
@@ -481,9 +481,9 @@ class TestModelGame:
                 },
                 {"inline": True, "name": "Format", "value": "Commander"},
                 {"inline": True, "name": "Started at", "value": "<t:1635638400>"},
-                {"inline": False, "name": "Support SpellBot", "value": ANY},
+                {"inline": False, "name": "Support Seer", "value": ANY},
             ],
-            "footer": {"text": f"SpellBot Game ID: #SB{game.id} — Service: MTG Arena"},
+            "footer": {"text": f"Seer Game ID: #SB{game.id} — Service: MTG Arena"},
             "thumbnail": {"url": settings.THUMB_URL},
             "title": "**Your game is ready!**",
             "type": "rich",
@@ -537,9 +537,9 @@ class TestModelGame:
                 },
                 {"inline": True, "name": "Format", "value": "Commander"},
                 {"inline": True, "name": "Started at", "value": "<t:1635638400>"},
-                {"inline": False, "name": "Support SpellBot", "value": ANY},
+                {"inline": False, "name": "Support Seer", "value": ANY},
             ],
-            "footer": {"text": f"SpellBot Game ID: #SB{game.id} — Service: SpellTable"},
+            "footer": {"text": f"Seer Game ID: #SB{game.id} — Service: SpellTable"},
             "thumbnail": {"url": settings.THUMB_URL},
             "title": "**Your game is ready!**",
             "type": "rich",
@@ -548,7 +548,7 @@ class TestModelGame:
         assert game.to_embed(dm=True).to_dict() == {
             "color": settings.STARTED_EMBED_COLOR,
             "description": (
-                "Sorry but SpellBot was unable to create a link for "
+                "Sorry but Seer was unable to create a link for "
                 "this game. Please go to [SpellTable]"
                 "(https://spelltable.wizards.com/) to create one."
                 "\n\n"
@@ -565,9 +565,9 @@ class TestModelGame:
                 },
                 {"inline": True, "name": "Format", "value": "Commander"},
                 {"inline": True, "name": "Started at", "value": "<t:1635638400>"},
-                {"inline": False, "name": "Support SpellBot", "value": ANY},
+                {"inline": False, "name": "Support Seer", "value": ANY},
             ],
-            "footer": {"text": f"SpellBot Game ID: #SB{game.id} — Service: SpellTable"},
+            "footer": {"text": f"Seer Game ID: #SB{game.id} — Service: SpellTable"},
             "thumbnail": {"url": settings.THUMB_URL},
             "title": "**Your game is ready!**",
             "type": "rich",
@@ -607,9 +607,9 @@ class TestModelGame:
                 },
                 {"inline": True, "name": "Format", "value": "Commander"},
                 {"inline": True, "name": "Started at", "value": "<t:1635638400>"},
-                {"inline": False, "name": "Support SpellBot", "value": ANY},
+                {"inline": False, "name": "Support Seer", "value": ANY},
             ],
-            "footer": {"text": f"SpellBot Game ID: #SB{game.id} — Service: Table Stream"},
+            "footer": {"text": f"Seer Game ID: #SB{game.id} — Service: Table Stream"},
             "thumbnail": {"url": settings.THUMB_URL},
             "title": "**Your game is ready!**",
             "type": "rich",
@@ -618,7 +618,7 @@ class TestModelGame:
         assert game.to_embed(dm=True).to_dict() == {
             "color": settings.STARTED_EMBED_COLOR,
             "description": (
-                "Sorry but SpellBot was unable to create a link for "
+                "Sorry but Seer was unable to create a link for "
                 "this game. Please go to [Table Stream]"
                 "(https://table-stream.com/) to create one."
                 "\n\n"
@@ -637,9 +637,9 @@ class TestModelGame:
                 },
                 {"inline": True, "name": "Format", "value": "Commander"},
                 {"inline": True, "name": "Started at", "value": "<t:1635638400>"},
-                {"inline": False, "name": "Support SpellBot", "value": ANY},
+                {"inline": False, "name": "Support Seer", "value": ANY},
             ],
-            "footer": {"text": f"SpellBot Game ID: #SB{game.id} — Service: Table Stream"},
+            "footer": {"text": f"Seer Game ID: #SB{game.id} — Service: Table Stream"},
             "thumbnail": {"url": settings.THUMB_URL},
             "title": "**Your game is ready!**",
             "type": "rich",
@@ -679,9 +679,9 @@ class TestModelGame:
                 },
                 {"inline": True, "name": "Format", "value": "Commander"},
                 {"inline": True, "name": "Started at", "value": "<t:1635638400>"},
-                {"inline": False, "name": "Support SpellBot", "value": ANY},
+                {"inline": False, "name": "Support Seer", "value": ANY},
             ],
-            "footer": {"text": f"SpellBot Game ID: #SB{game.id} — Service: SpellTable"},
+            "footer": {"text": f"Seer Game ID: #SB{game.id} — Service: SpellTable"},
             "thumbnail": {"url": settings.THUMB_URL},
             "title": "**Your game is ready!**",
             "type": "rich",
@@ -707,9 +707,9 @@ class TestModelGame:
                 },
                 {"inline": True, "name": "Format", "value": "Commander"},
                 {"inline": True, "name": "Started at", "value": "<t:1635638400>"},
-                {"inline": False, "name": "Support SpellBot", "value": ANY},
+                {"inline": False, "name": "Support Seer", "value": ANY},
             ],
-            "footer": {"text": f"SpellBot Game ID: #SB{game.id} — Service: SpellTable"},
+            "footer": {"text": f"Seer Game ID: #SB{game.id} — Service: SpellTable"},
             "thumbnail": {"url": settings.THUMB_URL},
             "title": "**Your game is ready!**",
             "type": "rich",
@@ -750,9 +750,9 @@ class TestModelGame:
                 },
                 {"inline": True, "name": "Format", "value": "Commander"},
                 {"inline": True, "name": "Started at", "value": "<t:1635638400>"},
-                {"inline": False, "name": "Support SpellBot", "value": ANY},
+                {"inline": False, "name": "Support Seer", "value": ANY},
             ],
-            "footer": {"text": f"SpellBot Game ID: #SB{game.id} — Service: SpellTable"},
+            "footer": {"text": f"Seer Game ID: #SB{game.id} — Service: SpellTable"},
             "thumbnail": {"url": settings.THUMB_URL},
             "title": "**Your game is ready!**",
             "type": "rich",
@@ -779,9 +779,9 @@ class TestModelGame:
                 },
                 {"inline": True, "name": "Format", "value": "Commander"},
                 {"inline": True, "name": "Started at", "value": "<t:1635638400>"},
-                {"inline": False, "name": "Support SpellBot", "value": ANY},
+                {"inline": False, "name": "Support Seer", "value": ANY},
             ],
-            "footer": {"text": f"SpellBot Game ID: #SB{game.id} — Service: SpellTable"},
+            "footer": {"text": f"Seer Game ID: #SB{game.id} — Service: SpellTable"},
             "thumbnail": {"url": settings.THUMB_URL},
             "title": "**Your game is ready!**",
             "type": "rich",
@@ -819,9 +819,9 @@ class TestModelGame:
                 },
                 {"inline": True, "name": "Format", "value": "Commander"},
                 {"inline": True, "name": "Started at", "value": "<t:1635638400>"},
-                {"inline": False, "name": "Support SpellBot", "value": ANY},
+                {"inline": False, "name": "Support Seer", "value": ANY},
             ],
-            "footer": {"text": f"SpellBot Game ID: #SB{game.id} — Service: SpellTable"},
+            "footer": {"text": f"Seer Game ID: #SB{game.id} — Service: SpellTable"},
             "thumbnail": {"url": settings.THUMB_URL},
             "title": "**Your game is ready!**",
             "type": "rich",
@@ -847,9 +847,9 @@ class TestModelGame:
                 },
                 {"inline": True, "name": "Format", "value": "Commander"},
                 {"inline": True, "name": "Started at", "value": "<t:1635638400>"},
-                {"inline": False, "name": "Support SpellBot", "value": ANY},
+                {"inline": False, "name": "Support Seer", "value": ANY},
             ],
-            "footer": {"text": f"SpellBot Game ID: #SB{game.id} — Service: SpellTable"},
+            "footer": {"text": f"Seer Game ID: #SB{game.id} — Service: SpellTable"},
             "thumbnail": {"url": settings.THUMB_URL},
             "title": "**Your game is ready!**",
             "type": "rich",
@@ -901,9 +901,9 @@ class TestModelGame:
                     "name": "🔊 Suggested Voice Channel",
                     "value": f"<#{dc.id}>",
                 },
-                {"inline": False, "name": "Support SpellBot", "value": ANY},
+                {"inline": False, "name": "Support Seer", "value": ANY},
             ],
-            "footer": {"text": f"SpellBot Game ID: #SB{game.id} — Service: SpellTable"},
+            "footer": {"text": f"Seer Game ID: #SB{game.id} — Service: SpellTable"},
             "thumbnail": {"url": settings.THUMB_URL},
             "title": "**Your game is ready!**",
             "type": "rich",
@@ -935,9 +935,9 @@ class TestModelGame:
                     "name": "🔊 Suggested Voice Channel",
                     "value": f"<#{dc.id}>",
                 },
-                {"inline": False, "name": "Support SpellBot", "value": ANY},
+                {"inline": False, "name": "Support Seer", "value": ANY},
             ],
-            "footer": {"text": f"SpellBot Game ID: #SB{game.id} — Service: SpellTable"},
+            "footer": {"text": f"Seer Game ID: #SB{game.id} — Service: SpellTable"},
             "thumbnail": {"url": settings.THUMB_URL},
             "title": "**Your game is ready!**",
             "type": "rich",

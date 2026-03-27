@@ -10,12 +10,11 @@ SouthSeer is your all-in-one league management bot for Discord. Track MTG Comman
 - Automatic leaderboards and season tracking
 - Deck and army roster management
 
-Originally built by Amy Troschinetz ([@lexicalunit](https://github.com/lexicalunit)), now enhanced and self-hosted by Southside Studio and Hobbies.
+Originally built by Amy Troschinetz, now enhanced and maintained by Southside Studio and Hobbies.
 
 ---
 
-[MIT][mit] © [Amy Troschinetz][lexicalunit] et [al][contributors]
+[MIT][mit] © [Southside Studio and Hobbies][southsidestudio]
 
-[contributors]: https://github.com/lexicalunit/spellbot/graphs/contributors
-[lexicalunit]: http://github.com/lexicalunit
+[southsidestudio]: https://github.com/Southsidestudio/Seer
 [mit]: https://opensource.org/licenses/MIT

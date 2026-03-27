@@ -5,9 +5,9 @@ from unittest.mock import patch
 import pytest
 from sqlalchemy.sql.expression import and_
 
-from spellbot.database import DatabaseSession
-from spellbot.enums import GameBracket, GameFormat, GameService
-from spellbot.models import (
+from seer.database import DatabaseSession
+from seer.enums import GameBracket, GameFormat, GameService
+from seer.models import (
     Channel,
     Game,
     GameStatus,
@@ -16,7 +16,7 @@ from spellbot.models import (
     Queue,
     User,
 )
-from spellbot.services import GamesService
+from seer.services import GamesService
 from tests.factories import (
     BlockFactory,
     ChannelFactory,
@@ -204,7 +204,7 @@ class TestServiceGamesFilterPendingGames:
         user2 = UserFactory.create()
         QueueFactory.create(game_id=game1.id, user_xid=user2.xid)
 
-        with patch("spellbot.services.games.settings.MAX_PENDING_GAMES", 3):
+        with patch("seer.services.games.settings.MAX_PENDING_GAMES", 3):
             games = GamesService()
             assert await games.filter_pending_games([user1.xid, user2.xid]) == [user2.xid]
 

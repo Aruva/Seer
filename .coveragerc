@@ -2,9 +2,9 @@
 branch = True
 source = .
 omit =
-    src/spellbot/_version.py
-    src/spellbot/migrations/env.py
-    src/spellbot/web/server.py
+    src/seer/_version.py
+    src/seer/migrations/env.py
+    src/seer/web/server.py
     shell.py
 
 [report]

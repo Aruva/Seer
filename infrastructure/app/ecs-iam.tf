@@ -1,6 +1,6 @@
 # IAM role for ECS task execution
 resource "aws_iam_role" "ecs_task_execution_role" {
-  name = "spellbot-ecs-task-execution-role"
+  name = "seer-ecs-task-execution-role"
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
@@ -16,7 +16,7 @@ resource "aws_iam_role" "ecs_task_execution_role" {
   })
 
   tags = {
-    Name = "spellbot-ecs-task-execution-role"
+    Name = "seer-ecs-task-execution-role"
   }
 }
 
@@ -28,7 +28,7 @@ resource "aws_iam_role_policy_attachment" "ecs_task_execution_role_policy" {
 
 # IAM role for ECS tasks (application permissions)
 resource "aws_iam_role" "ecs_task_role" {
-  name = "spellbot-ecs-task-role"
+  name = "seer-ecs-task-role"
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
@@ -44,13 +44,13 @@ resource "aws_iam_role" "ecs_task_role" {
   })
 
   tags = {
-    Name = "spellbot-ecs-task-role"
+    Name = "seer-ecs-task-role"
   }
 }
 
 # IAM policy for ECS task execution role to access Secrets Manager
 resource "aws_iam_role_policy" "ecs_task_execution_secrets_policy" {
-  name = "spellbot-ecs-secrets-access"
+  name = "seer-ecs-secrets-access"
   role = aws_iam_role.ecs_task_execution_role.id
 
   policy = jsonencode({
@@ -62,8 +62,8 @@ resource "aws_iam_role_policy" "ecs_task_execution_secrets_policy" {
           "secretsmanager:GetSecretValue"
         ]
         Resource = [
-          aws_secretsmanager_secret.spellbot_prod.arn,
-          aws_secretsmanager_secret.spellbot_stage.arn,
+          aws_secretsmanager_secret.seer_prod.arn,
+          aws_secretsmanager_secret.seer_stage.arn,
           data.aws_secretsmanager_secret.stage_db_password.arn,
           data.aws_secretsmanager_secret.prod_db_password.arn
         ]

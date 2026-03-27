@@ -5,9 +5,9 @@ from typing import TYPE_CHECKING, cast
 import pytest
 import pytest_asyncio
 
-from spellbot.cogs import VerifyCog
-from spellbot.database import DatabaseSession
-from spellbot.models import User, Verify
+from seer.cogs import VerifyCog
+from seer.database import DatabaseSession
+from seer.models import User, Verify
 from tests.mixins import InteractionMixin
 from tests.mocks import mock_discord_object
 
@@ -16,13 +16,13 @@ if TYPE_CHECKING:
 
     import discord
 
-    from spellbot import SpellBot
+    from seer import Seer
 
 pytestmark = pytest.mark.use_db
 
 
 @pytest_asyncio.fixture
-async def cog(bot: SpellBot) -> VerifyCog:
+async def cog(bot: Seer) -> VerifyCog:
     return VerifyCog(bot)
 
 

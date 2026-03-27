@@ -6,7 +6,7 @@ from typing import TYPE_CHECKING, cast
 import pytest
 import pytest_asyncio
 
-from spellbot.cogs import ScoreCog
+from seer.cogs import ScoreCog
 from tests.mixins import InteractionMixin
 from tests.mocks import build_channel, build_guild, build_interaction, mock_discord_object
 
@@ -16,14 +16,14 @@ if TYPE_CHECKING:
     import discord
     from freezegun.api import FrozenDateTimeFactory
 
-    from spellbot import SpellBot
-    from spellbot.models import Channel, User
+    from seer import Seer
+    from seer.models import Channel, User
 
 pytestmark = pytest.mark.use_db
 
 
 @pytest_asyncio.fixture
-async def cog(bot: SpellBot) -> ScoreCog:
+async def cog(bot: Seer) -> ScoreCog:
     return ScoreCog(bot)
 
 
@@ -36,8 +36,8 @@ class TestCogScore(InteractionMixin):
             "author": {"name": f"Record of games played on {self.guild.name}"},
             "color": self.settings.INFO_EMBED_COLOR,
             "description": f"<@{user.xid}> has played 0 games on this server.\n"
-            "View more [details on spellbot.io]"
-            f"(https://bot.spellbot.io/g/{self.guild.xid}/u/{user.xid}).",
+            "View more [details on SouthSeer]"
+            f"({self.settings.API_BASE_URL}/g/{self.guild.xid}/u/{user.xid}).",
             "thumbnail": {"url": self.settings.ICO_URL},
             "type": "rich",
             "flags": 0,
@@ -57,8 +57,8 @@ class TestCogScore(InteractionMixin):
             "author": {"name": f"Record of games played on {self.guild.name}"},
             "color": self.settings.INFO_EMBED_COLOR,
             "description": f"<@{user.xid}> has played 1 game on this server.\n"
-            "View more [details on spellbot.io]"
-            f"(https://bot.spellbot.io/g/{self.guild.xid}/u/{user.xid}).",
+            "View more [details on SouthSeer]"
+            f"({self.settings.API_BASE_URL}/g/{self.guild.xid}/u/{user.xid}).",
             "thumbnail": {"url": self.settings.ICO_URL},
             "type": "rich",
             "flags": 0,
@@ -77,8 +77,8 @@ class TestCogScore(InteractionMixin):
             "author": {"name": f"Record of games played on {self.guild.name}"},
             "color": self.settings.INFO_EMBED_COLOR,
             "description": f"<@{user.xid}> has played 2 games on this server.\n"
-            "View more [details on spellbot.io]"
-            f"(https://bot.spellbot.io/g/{self.guild.xid}/u/{user.xid}).",
+            "View more [details on SouthSeer]"
+            f"({self.settings.API_BASE_URL}/g/{self.guild.xid}/u/{user.xid}).",
             "thumbnail": {"url": self.settings.ICO_URL},
             "type": "rich",
             "flags": 0,
@@ -98,8 +98,8 @@ class TestCogScore(InteractionMixin):
             "author": {"name": f"Record of games played on {new_guild.name}"},
             "color": self.settings.INFO_EMBED_COLOR,
             "description": f"<@{user.xid}> has played 0 games on this server.\n"
-            "View more [details on spellbot.io]"
-            f"(https://bot.spellbot.io/g/{new_guild.id}/u/{user.xid}).",
+            "View more [details on SouthSeer]"
+            f"({self.settings.API_BASE_URL}/g/{new_guild.id}/u/{user.xid}).",
             "thumbnail": {"url": self.settings.ICO_URL},
             "type": "rich",
             "flags": 0,
@@ -114,8 +114,8 @@ class TestCogScore(InteractionMixin):
             "author": {"name": f"Record of games played on {self.guild.name}"},
             "color": self.settings.INFO_EMBED_COLOR,
             "description": f"<@{target_member.id}> has played 0 games on this server.\n"
-            "View more [details on spellbot.io]"
-            f"(https://bot.spellbot.io/g/{self.guild.xid}/u/{target_member.id}).",
+            "View more [details on SouthSeer]"
+            f"({self.settings.API_BASE_URL}/g/{self.guild.xid}/u/{target_member.id}).",
             "thumbnail": {"url": self.settings.ICO_URL},
             "type": "rich",
             "flags": 0,
@@ -127,8 +127,8 @@ class TestCogScore(InteractionMixin):
         assert self.last_send_message("embed") == {
             "author": {"name": f"Recent games played in {channel.name}"},
             "color": self.settings.INFO_EMBED_COLOR,
-            "description": "View [game history on spellbot.io]"
-            f"(https://bot.spellbot.io/g/{self.guild.xid}/c/{channel.xid}).",
+            "description": "View [game history on SouthSeer]"
+            f"({self.settings.API_BASE_URL}/g/{self.guild.xid}/c/{channel.xid}).",
             "thumbnail": {"url": self.settings.ICO_URL},
             "type": "rich",
             "flags": 0,

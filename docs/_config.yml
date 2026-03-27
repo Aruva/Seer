@@ -10,20 +10,18 @@
 ############################
 
 # Name of website
-title: SpellBot
+title: SouthSeer
 
 # Your name to show in the footer
-author: "Amy Troschinetz"
+author: "Southside Studio and Hobbies"
 
 ###############################################
 # --- List of links in the navigation bar --- #
 ###############################################
 
 navbar-links:
-  Convoke: "https://convoke.games/"
-  SpellTable: "https://spelltable.wizards.com/"
-  Patreon: "https://www.patreon.com/lexicalunit"
-  Development: "https://github.com/lexicalunit/spellbot"
+  Home: "https://southsidestudioandhobbies.com"
+  Development: "https://github.com/Southsidestudio/Seer"
 
 ################
 # --- Logo --- #
@@ -49,11 +47,9 @@ avatar: "/assets/img/avatar-icon.png"
 # You can change the order that they show up on the page by changing the order here.
 # Uncomment the links you want to show and add your information to each one.
 social-network-links:
-  email: "spellbot@lexicalunit.com"
-  github: "lexicalunit"
-  bluesky: "spellbot.io"
-#  twitter: "SpellBotIO"
-#  mastodon: mstdn.ca/@lexicalunit
+  github: "Southsidestudio"
+#  email: ""
+#  bluesky: ""
 #  facebook: deanattali
 #  patreon: DeanAttali
 #  youtube: c/daattali
@@ -88,7 +84,7 @@ share-links-active:
 
 # How to display the link to your website in the footer
 # Remove this if you don't want a link in the footer
-url-pretty: "SpellBot.io"
+url-pretty: "SouthSeer"
 
 # Add the website title to the title of every page
 title-on-all-pages: true
@@ -146,11 +142,11 @@ mobile-theme-col: "#5A3EFD"
 
 # For any extra visual customization, you can include additional CSS files in every page on your site. List any custom CSS files here
 site-css:
-  - "/assets/css/spellbot.css"
+  - "/assets/css/seer.css"
 
 # If you have common JavaScript files that should be included in every page, list them here
 site-js:
- - "/assets/js/spellbot.js"
+ - "/assets/js/seer.js"
 
 #################################
 # --- Web Analytics Section --- #

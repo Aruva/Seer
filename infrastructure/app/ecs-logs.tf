@@ -1,20 +1,20 @@
 # CloudWatch log groups
-resource "aws_cloudwatch_log_group" "spellbot_prod" {
-  name              = "/ecs/spellbot-prod"
+resource "aws_cloudwatch_log_group" "seer_prod" {
+  name              = "/ecs/seer-prod"
   retention_in_days = 5
 
   tags = {
-    Name        = "spellbot-prod-logs"
+    Name        = "seer-prod-logs"
     Environment = "prod"
   }
 }
 
-resource "aws_cloudwatch_log_group" "spellbot_stage" {
-  name              = "/ecs/spellbot-stage"
+resource "aws_cloudwatch_log_group" "seer_stage" {
+  name              = "/ecs/seer-stage"
   retention_in_days = 1
 
   tags = {
-    Name        = "spellbot-stage-logs"
+    Name        = "seer-stage-logs"
     Environment = "stage"
   }
 }

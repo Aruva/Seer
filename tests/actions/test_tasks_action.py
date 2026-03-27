@@ -10,11 +10,11 @@ import pytest
 import pytest_asyncio
 from sqlalchemy import update
 
-from spellbot.actions import TasksAction
-from spellbot.client import build_bot
-from spellbot.database import DatabaseSession
-from spellbot.models import Channel, Game, Guild
-from spellbot.services import ChannelsService, GamesService, GuildsService, ServicesRegistry
+from seer.actions import TasksAction
+from seer.client import build_bot
+from seer.database import DatabaseSession
+from seer.models import Channel, Game, Guild
+from seer.services import ChannelsService, GamesService, GuildsService, ServicesRegistry
 from tests.mocks import mock_discord_object
 
 if TYPE_CHECKING:
@@ -22,8 +22,8 @@ if TYPE_CHECKING:
 
     from pytest_mock import MockerFixture
 
-    from spellbot import SpellBot
-    from spellbot.models import Channel, Guild
+    from seer import Seer
+    from seer.models import Channel, Guild
     from tests.fixtures import Factories
 
 pytestmark = pytest.mark.use_db
@@ -50,7 +50,7 @@ async def mock_services() -> MagicMock:
 
 
 @pytest_asyncio.fixture
-async def action(bot: SpellBot) -> TasksAction:
+async def action(bot: Seer) -> TasksAction:
     async with TasksAction.create(bot) as action:
         return action
 
@@ -63,7 +63,7 @@ async def guild(factories: Factories) -> Guild:
 @pytest_asyncio.fixture
 async def discord_guild(guild: Guild, mocker: MockerFixture) -> discord.Guild:
     discord_obj: discord.Guild = mock_discord_object(guild)  # type: ignore
-    mocker.patch("spellbot.client.SpellBot.get_guild", return_value=discord_obj)
+    mocker.patch("seer.client.Seer.get_guild", return_value=discord_obj)
     discord_obj.categories = []  # type: ignore
     return discord_obj
 
@@ -124,9 +124,9 @@ async def make_category_channel(
 
 
 @pytest_asyncio.fixture
-async def bot(mocker: MockerFixture, discord_guild: discord.Guild) -> SpellBot:
+async def bot(mocker: MockerFixture, discord_guild: discord.Guild) -> Seer:
     mocker.patch(
-        "spellbot.client.SpellBot.guilds",
+        "seer.client.Seer.guilds",
         new_callable=PropertyMock,
         return_value=[discord_guild],
     )
@@ -260,13 +260,13 @@ class TestTaskExpireInactiveChannels:
         action.services.games.delete_games = AsyncMock()
         action.services.channels.select = AsyncMock(return_value={"delete_expired": delete_expired})
         mock_fetch_channel = AsyncMock(return_value=chan)
-        mocker.patch("spellbot.actions.tasks_action.safe_fetch_text_channel", mock_fetch_channel)
+        mocker.patch("seer.actions.tasks_action.safe_fetch_text_channel", mock_fetch_channel)
         mock_get_partial = MagicMock(return_value=post)
-        mocker.patch("spellbot.actions.tasks_action.safe_get_partial_message", mock_get_partial)
+        mocker.patch("seer.actions.tasks_action.safe_get_partial_message", mock_get_partial)
         mock_delete_message = AsyncMock()
-        mocker.patch("spellbot.actions.tasks_action.safe_delete_message", mock_delete_message)
+        mocker.patch("seer.actions.tasks_action.safe_delete_message", mock_delete_message)
         mock_update_embed = AsyncMock()
-        mocker.patch("spellbot.actions.tasks_action.safe_update_embed", mock_update_embed)
+        mocker.patch("seer.actions.tasks_action.safe_update_embed", mock_update_embed)
 
         await action.expire_inactive_games()
 
@@ -321,7 +321,7 @@ class TestTaskCleanupOldVoiceChannels:
     ) -> None:
         factories.guild.create(voice_create=True)
         mocker.patch(
-            "spellbot.client.SpellBot.guilds",
+            "seer.client.Seer.guilds",
             new_callable=PropertyMock,
             return_value=[],
         )
@@ -338,7 +338,7 @@ class TestTaskCleanupOldVoiceChannels:
     ) -> None:
         guild = factories.guild.create(voice_create=True)
         mocker.patch(
-            "spellbot.client.SpellBot.guilds",
+            "seer.client.Seer.guilds",
             new_callable=PropertyMock,
             return_value=[mock_discord_object(guild)],
         )
@@ -356,12 +356,12 @@ class TestTaskCleanupOldVoiceChannels:
         guild = factories.guild.create(voice_create=True)
         discord_guild = mock_discord_object(guild)
         mocker.patch(
-            "spellbot.client.SpellBot.guilds",
+            "seer.client.Seer.guilds",
             new_callable=PropertyMock,
             return_value=[discord_guild],
         )
         mocker.patch(
-            "spellbot.client.SpellBot.get_guild",
+            "seer.client.Seer.get_guild",
             return_value=discord_guild,
         )
         mocker.patch.object(discord_guild, "categories", [1, 2, 3])
@@ -599,7 +599,7 @@ class TestTaskCleanupOldVoiceChannels:
         action: TasksAction,
         mocker: MockerFixture,
     ) -> None:
-        import spellbot.actions.tasks_action as mod
+        import seer.actions.tasks_action as mod
 
         mocker.patch.object(mod.settings, "VOICE_CLEANUP_BATCH", 0)
         manage_perms = discord.Permissions(

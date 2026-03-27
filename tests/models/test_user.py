@@ -5,8 +5,8 @@ from typing import TYPE_CHECKING
 
 import pytest
 
-from spellbot.database import DatabaseSession
-from spellbot.models import GameStatus, Post
+from seer.database import DatabaseSession
+from seer.models import GameStatus, Post
 
 if TYPE_CHECKING:
     from tests.fixtures import Factories

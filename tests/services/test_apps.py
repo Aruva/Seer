@@ -4,7 +4,7 @@ from typing import TYPE_CHECKING
 
 import pytest
 
-from spellbot.services import AppsService
+from seer.services import AppsService
 
 if TYPE_CHECKING:
     from tests.fixtures import Factories

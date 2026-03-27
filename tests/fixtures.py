@@ -11,16 +11,16 @@ import pytest_asyncio
 from click.testing import CliRunner
 from discord.ext import commands
 
-from spellbot.client import build_bot
-from spellbot.database import (
+from seer.client import build_bot
+from seer.database import (
     DatabaseSession,
     db_session_maker,
     delete_test_database,
     initialize_connection,
     rollback_transaction,
 )
-from spellbot.settings import Settings
-from spellbot.web import build_web_app
+from seer.settings import Settings
+from seer.web import build_web_app
 from tests.factories import (
     BlockFactory,
     ChannelFactory,
@@ -47,8 +47,8 @@ if TYPE_CHECKING:
     from aiohttp.test_utils import TestClient
     from freezegun.api import FrozenDateTimeFactory
 
-    from spellbot import SpellBot
-    from spellbot.models import Channel, Game, Guild
+    from seer import Seer
+    from seer.models import Channel, Game, Guild
 
 logger = logging.getLogger(__name__)
 
@@ -83,7 +83,7 @@ async def session_context(
     event_loop = asyncio.get_event_loop()
 
     if "use_db" in request.keywords:  # pragma: no cover
-        await initialize_connection("spellbot-test", use_transaction=True, worker_id=worker_id)
+        await initialize_connection("seer-test", use_transaction=True, worker_id=worker_id)
 
         test_session = db_session_maker()
         DatabaseSession.set(test_session)
@@ -148,7 +148,7 @@ async def use_session_context(
 
 
 @pytest_asyncio.fixture
-async def bot() -> SpellBot:
+async def bot() -> Seer:
     # In tests we create the connection using fixtures.
     return build_bot(mock_games=True, create_connection=False)
 
@@ -239,12 +239,12 @@ def context(
 @pytest.fixture
 def cli() -> Generator[MagicMock, None, None]:
     with (
-        patch("spellbot.cli.asyncio") as mock_asyncio,
-        patch("spellbot.cli.configure_logging") as mock_configure_logging,
-        patch("spellbot.cli.hupper") as mock_hupper,
-        patch("spellbot.client.build_bot") as mock_build_bot,
-        patch("spellbot.cli.settings") as mock_settings,
-        patch("spellbot.web.launch_web_server") as mock_launch_web_server,
+        patch("seer.cli.asyncio") as mock_asyncio,
+        patch("seer.cli.configure_logging") as mock_configure_logging,
+        patch("seer.cli.hupper") as mock_hupper,
+        patch("seer.client.build_bot") as mock_build_bot,
+        patch("seer.cli.settings") as mock_settings,
+        patch("seer.web.launch_web_server") as mock_launch_web_server,
     ):
         mock_loop = MagicMock(name="loop")
         mock_loop.run_forever = MagicMock(name="run_forever")

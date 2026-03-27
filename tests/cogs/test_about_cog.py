@@ -4,8 +4,8 @@ from typing import TYPE_CHECKING
 
 import pytest
 
-from spellbot import __version__
-from spellbot.cogs import AboutCog
+from seer import __version__
+from seer.cogs import AboutCog
 from tests.mixins import InteractionMixin
 
 if TYPE_CHECKING:
@@ -28,34 +28,33 @@ class TestCogAbout(InteractionMixin):
         ].to_dict() == {
             "color": self.settings.INFO_EMBED_COLOR,
             "description": (
-                "_The Discord bot for [SpellTable](https://spelltable.wizards.com/)._\n"
+                "_The Discord bot for competitive leagues and tracking results._\n"
                 "\n"
-                "Having issues with SpellBot? Please [report bugs]"
-                "(https://github.com/lexicalunit/spellbot/issues)!\n"
+                "Having issues with SouthSeer? Please [report bugs]"
+                "(https://github.com/Southsidestudio/Seer/issues)!\n"
                 "\n"
-                f"[🔗 Add SpellBot to your Discord!]({self.settings.BOT_INVITE_LINK})\n"
+                f"[🔗 Add SouthSeer to your Discord!]({self.settings.BOT_INVITE_LINK})\n"
                 "\n"
-                "SpellBot's continued operation is made possible"
-                " by [PlayEDH](https://www.playedh.com/) and my Patreon supporters.\n"
+                "SouthSeer is built and maintained by Southside Studio and Hobbies.\n"
                 "\n"
-                "💜 Help keep SpellBot running by [becoming a patron!]"
-                "(https://www.patreon.com/lexicalunit)"
+                "Visit us at [southsidestudioandhobbies.com]"
+                "(https://southsidestudioandhobbies.com)"
             ),
             "fields": [
                 {
                     "inline": True,
                     "name": "Version",
-                    "value": (f"[{__version__}](https://pypi.org/project/spellbot/{__version__}/)"),
+                    "value": (f"[{__version__}](https://pypi.org/project/seer/{__version__}/)"),
                 },
                 {
                     "inline": True,
-                    "name": "Author",
-                    "value": "[@lexicalunit](https://github.com/lexicalunit)",
+                    "name": "Maintainer",
+                    "value": "[Southside Studio and Hobbies](https://southsidestudioandhobbies.com)",
                 },
             ],
             "thumbnail": {"url": self.settings.thumb(None)},
-            "title": "SpellBot",
+            "title": "SouthSeer",
             "type": "rich",
-            "url": "http://spellbot.io/",
+            "url": "https://southsidestudioandhobbies.com",
             "flags": 0,
         }

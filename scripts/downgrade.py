@@ -10,8 +10,8 @@ import alembic.command
 import alembic.config
 
 SRC_ROOT = Path(realpath(__file__)).parent.parent
-SPELLBOT_DIR = SRC_ROOT / "src" / "spellbot"
-MIGRATIONS_DIR = SPELLBOT_DIR / "migrations"
+SEER_DIR = SRC_ROOT / "src" / "seer"
+MIGRATIONS_DIR = SEER_DIR / "migrations"
 ALEMBIC_INI = MIGRATIONS_DIR / "alembic.ini"
 
 url = sys.argv[1]

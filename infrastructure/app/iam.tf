@@ -1,9 +1,9 @@
-# IAM Role for SpellBot Application Deployment
+# IAM Role for Seer Application Deployment
 
 # Deployment role that can be assumed by CI/CD systems
-resource "aws_iam_role" "spellbot_deployment" {
-  name        = "spellbot-deployment-role"
-  description = "IAM role for SpellBot application deployment"
+resource "aws_iam_role" "seer_deployment" {
+  name        = "seer-deployment-role"
+  description = "IAM role for Seer application deployment"
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
@@ -19,14 +19,14 @@ resource "aws_iam_role" "spellbot_deployment" {
             "token.actions.githubusercontent.com:aud" = "sts.amazonaws.com"
           },
           StringLike = {
-            "token.actions.githubusercontent.com:sub" = "repo:lexicalunit/spellbot:*"
+            "token.actions.githubusercontent.com:sub" = "repo:Southsidestudio/Seer:*"
         } }
       }
     ]
   })
 
   tags = {
-    Name = "spellbot-deployment-role"
+    Name = "seer-deployment-role"
   }
 }
 
@@ -52,8 +52,8 @@ resource "aws_iam_openid_connect_provider" "github_actions" {
 }
 
 # Custom policy for ECR operations
-resource "aws_iam_policy" "spellbot_ecr_deployment" {
-  name        = "spellbot-ecr-deployment"
+resource "aws_iam_policy" "seer_ecr_deployment" {
+  name        = "seer-ecr-deployment"
   description = "Permissions for ECR image management"
 
   policy = jsonencode({
@@ -75,7 +75,7 @@ resource "aws_iam_policy" "spellbot_ecr_deployment" {
           "ecr:ListImages"
         ]
         Resource = [
-          aws_ecr_repository.spellbot.arn
+          aws_ecr_repository.seer.arn
         ]
       },
       {
@@ -89,13 +89,13 @@ resource "aws_iam_policy" "spellbot_ecr_deployment" {
   })
 
   tags = {
-    Name = "spellbot-ecr-deployment"
+    Name = "seer-ecr-deployment"
   }
 }
 
 # Custom policy for ECS deployment operations
-resource "aws_iam_policy" "spellbot_ecs_deployment" {
-  name        = "spellbot-ecs-deployment"
+resource "aws_iam_policy" "seer_ecs_deployment" {
+  name        = "seer-ecs-deployment"
   description = "Permissions for ECS task definition and service management"
 
   policy = jsonencode({
@@ -119,8 +119,8 @@ resource "aws_iam_policy" "spellbot_ecs_deployment" {
           "ecs:ListServices"
         ]
         Resource = [
-          "arn:aws:ecs:*:${data.aws_caller_identity.current.account_id}:service/${aws_ecs_cluster.main.name}/spellbot-prod",
-          "arn:aws:ecs:*:${data.aws_caller_identity.current.account_id}:service/${aws_ecs_cluster.main.name}/spellbot-stage"
+          "arn:aws:ecs:*:${data.aws_caller_identity.current.account_id}:service/${aws_ecs_cluster.main.name}/seer-prod",
+          "arn:aws:ecs:*:${data.aws_caller_identity.current.account_id}:service/${aws_ecs_cluster.main.name}/seer-stage"
         ]
       },
       {
@@ -151,13 +151,13 @@ resource "aws_iam_policy" "spellbot_ecs_deployment" {
   })
 
   tags = {
-    Name = "spellbot-ecs-deployment"
+    Name = "seer-ecs-deployment"
   }
 }
 
 # Custom policy for SSM parameter management
-resource "aws_iam_policy" "spellbot_ssm_deployment" {
-  name        = "spellbot-ssm-deployment"
+resource "aws_iam_policy" "seer_ssm_deployment" {
+  name        = "seer-ssm-deployment"
   description = "Permissions for SSM parameter management"
 
   policy = jsonencode({
@@ -173,21 +173,21 @@ resource "aws_iam_policy" "spellbot_ssm_deployment" {
           "ssm:DescribeParameters"
         ]
         Resource = [
-          aws_ssm_parameter.spellbot_prod_image_uri.arn,
-          aws_ssm_parameter.spellbot_stage_image_uri.arn
+          aws_ssm_parameter.seer_prod_image_uri.arn,
+          aws_ssm_parameter.seer_stage_image_uri.arn
         ]
       }
     ]
   })
 
   tags = {
-    Name = "spellbot-ssm-deployment"
+    Name = "seer-ssm-deployment"
   }
 }
 
 # Custom policy for IAM pass role (needed for ECS task execution)
-resource "aws_iam_policy" "spellbot_iam_passrole" {
-  name        = "spellbot-iam-passrole"
+resource "aws_iam_policy" "seer_iam_passrole" {
+  name        = "seer-iam-passrole"
   description = "Permissions to pass ECS roles"
 
   policy = jsonencode({
@@ -212,30 +212,30 @@ resource "aws_iam_policy" "spellbot_iam_passrole" {
   })
 
   tags = {
-    Name = "spellbot-iam-passrole"
+    Name = "seer-iam-passrole"
   }
 }
 
 # Attach ECR policy to deployment role
-resource "aws_iam_role_policy_attachment" "spellbot_deployment_ecr" {
-  role       = aws_iam_role.spellbot_deployment.name
-  policy_arn = aws_iam_policy.spellbot_ecr_deployment.arn
+resource "aws_iam_role_policy_attachment" "seer_deployment_ecr" {
+  role       = aws_iam_role.seer_deployment.name
+  policy_arn = aws_iam_policy.seer_ecr_deployment.arn
 }
 
 # Attach ECS policy to deployment role
-resource "aws_iam_role_policy_attachment" "spellbot_deployment_ecs" {
-  role       = aws_iam_role.spellbot_deployment.name
-  policy_arn = aws_iam_policy.spellbot_ecs_deployment.arn
+resource "aws_iam_role_policy_attachment" "seer_deployment_ecs" {
+  role       = aws_iam_role.seer_deployment.name
+  policy_arn = aws_iam_policy.seer_ecs_deployment.arn
 }
 
 # Attach SSM policy to deployment role
-resource "aws_iam_role_policy_attachment" "spellbot_deployment_ssm" {
-  role       = aws_iam_role.spellbot_deployment.name
-  policy_arn = aws_iam_policy.spellbot_ssm_deployment.arn
+resource "aws_iam_role_policy_attachment" "seer_deployment_ssm" {
+  role       = aws_iam_role.seer_deployment.name
+  policy_arn = aws_iam_policy.seer_ssm_deployment.arn
 }
 
 # Attach IAM PassRole policy to deployment role
-resource "aws_iam_role_policy_attachment" "spellbot_deployment_iam" {
-  role       = aws_iam_role.spellbot_deployment.name
-  policy_arn = aws_iam_policy.spellbot_iam_passrole.arn
+resource "aws_iam_role_policy_attachment" "seer_deployment_iam" {
+  role       = aws_iam_role.seer_deployment.name
+  policy_arn = aws_iam_policy.seer_iam_passrole.arn
 }

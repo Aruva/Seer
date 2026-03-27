@@ -7,9 +7,9 @@ from unittest.mock import AsyncMock, MagicMock
 
 import pytest
 
-from spellbot.cogs import OwnerCog
-from spellbot.database import DatabaseSession
-from spellbot.models import Guild, User
+from seer.cogs import OwnerCog
+from seer.database import DatabaseSession
+from seer.models import Guild, User
 from tests.mixins import ContextMixin
 
 if TYPE_CHECKING:
@@ -72,7 +72,7 @@ class TestCogOwner(ContextMixin):
         target_user.id = 1002
         cog = OwnerCog(self.bot)
 
-        mocker.patch("spellbot.cogs.owner_cog.set_banned", AsyncMock(side_effect=RuntimeError()))
+        mocker.patch("seer.cogs.owner_cog.set_banned", AsyncMock(side_effect=RuntimeError()))
 
         with pytest.raises(RuntimeError):
             await self.run(cog, cog.ban, self.context, str(target_user.id))
@@ -124,7 +124,7 @@ class TestCogOwner(ContextMixin):
         cog = OwnerCog(self.bot)
 
         mocker.patch(
-            "spellbot.cogs.owner_cog.set_banned_guild",
+            "seer.cogs.owner_cog.set_banned_guild",
             AsyncMock(side_effect=RuntimeError()),
         )
 
@@ -160,7 +160,7 @@ class TestCogOwner(ContextMixin):
         )
 
     async def test_is_bad(self, mocker: MockerFixture) -> None:
-        mocker.patch("spellbot.cogs.owner_cog.is_bad_user", side_effect=[True, False])
+        mocker.patch("seer.cogs.owner_cog.is_bad_user", side_effect=[True, False])
         cog = OwnerCog(self.bot)
 
         await self.run(cog, cog.is_bad, self.context, "1")
@@ -172,7 +172,7 @@ class TestCogOwner(ContextMixin):
         self.context.author.send.assert_called_once_with("No")  # type: ignore
 
     async def test_sync(self, mocker: MockerFixture) -> None:
-        mocker.patch("spellbot.cogs.owner_cog.load_extensions", AsyncMock())
+        mocker.patch("seer.cogs.owner_cog.load_extensions", AsyncMock())
         cog = OwnerCog(self.bot)
         callback = partial(cog.sync.callback, cog)
 
@@ -182,7 +182,7 @@ class TestCogOwner(ContextMixin):
 
     async def test_sync_exception(self, mocker: MockerFixture) -> None:
         mocker.patch(
-            "spellbot.cogs.owner_cog.load_extensions",
+            "seer.cogs.owner_cog.load_extensions",
             AsyncMock(side_effect=RuntimeError("oops")),
         )
         cog = OwnerCog(self.bot)

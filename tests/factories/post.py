@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import factory
 
-from spellbot.models import Post
+from seer.models import Post
 
 
 class PostFactory(factory.alchemy.SQLAlchemyModelFactory):

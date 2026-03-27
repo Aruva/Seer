@@ -8,16 +8,16 @@ from unittest.mock import AsyncMock, MagicMock
 import discord
 import pytest
 
-from spellbot.actions import lfg_action
-from spellbot.cogs import LookingForGameCog
-from spellbot.database import DatabaseSession
-from spellbot.models import Game
+from seer.actions import lfg_action
+from seer.cogs import LookingForGameCog
+from seer.database import DatabaseSession
+from seer.models import Game
 from tests.mocks import build_author, build_channel, build_guild, build_interaction
 
 if TYPE_CHECKING:
     from collections.abc import Awaitable, Callable
 
-    from spellbot import SpellBot
+    from seer import Seer
 
 pytestmark = pytest.mark.use_db
 
@@ -33,7 +33,7 @@ async def run_lfg(cog: LookingForGameCog, interaction: discord.Interaction) -> N
 
 @pytest.mark.asyncio
 class TestCogLookingForGameConcurrency:
-    async def test_concurrent_lfg_requests_different_channels(self, bot: SpellBot) -> None:
+    async def test_concurrent_lfg_requests_different_channels(self, bot: Seer) -> None:
         cog = LookingForGameCog(bot)
         guild = build_guild()
         n = 100
@@ -64,7 +64,7 @@ class TestCogLookingForGameConcurrency:
 
     async def test_concurrent_lfg_requests_same_channel(
         self,
-        bot: SpellBot,
+        bot: Seer,
         monkeypatch: pytest.MonkeyPatch,
     ) -> None:
         next_message_xid = 1

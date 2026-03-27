@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-from spellbot.cli import main
+from seer.cli import main
 
 if TYPE_CHECKING:
     from unittest.mock import MagicMock
@@ -84,4 +84,4 @@ class TestCLI:
 
     def test_run_bot_with_dev(self, cli: MagicMock, runner: CliRunner) -> None:
         runner.invoke(main, ["--dev"])
-        cli.hupper.start_reloader.assert_called_once_with("spellbot.main")
+        cli.hupper.start_reloader.assert_called_once_with("seer.main")

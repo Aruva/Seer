@@ -18,7 +18,7 @@ uv run scripts/create_db_revision.py \
 
 > Note: An example database url: postgresql+psycopg://postgres@localhost:5432/postgres
 
-This will create a revision script in the `src/spellbot/versions/versions` directory with a name like `REVISIONID_some_description_of_your_changes.py`. You may have to edit this script manually to ensure that it is correct as the autogenerate facility of `alembic revision` is not perfect.
+This will create a revision script in the `src/seer/versions/versions` directory with a name like `REVISIONID_some_description_of_your_changes.py`. You may have to edit this script manually to ensure that it is correct as the autogenerate facility of `alembic revision` is not perfect.
 
 ## Reversing migrations
 
@@ -40,7 +40,7 @@ SOURCE_PASS="YOUR_SOURCE_PASSWORD"
 SOURCE_HOST="YOUR_SOURCE_HOSTNAME"
 SOURCE_DB_NAME="YOUR_SOURCE_DATABASE_NAME"
 SOURCE_DB_URL="postgres://${SOURCE_USER}:${SOURCE_PASS}@${SOURCE_HOST}:5432/${SOURCE_DB_NAME}"
-pg_dump -Fc --no-acl --no-owner "$SOURCE_DB_URL" > spellbot.dump
+pg_dump -Fc --no-acl --no-owner "$SOURCE_DB_URL" > seer.dump
 ```
 
 Then use [`pg_restore`][pg_restore] to restore the database from that file.
@@ -61,7 +61,7 @@ pg_restore \
   --no-owner --no-privileges \
   --role="$TARGET_OWNER" \
   --jobs=$(($(nproc) / 2)) \
-  ./spellbot.dump
+  ./seer.dump
 ```
 
 ## Readonly access

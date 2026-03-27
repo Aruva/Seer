@@ -4,8 +4,8 @@ import random
 
 import factory
 
-from spellbot.enums import GameBracket, GameFormat, GameService
-from spellbot.models import Notification
+from seer.enums import GameBracket, GameFormat, GameService
+from seer.models import Notification
 
 
 class NotificationFactory(factory.alchemy.SQLAlchemyModelFactory):

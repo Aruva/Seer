@@ -70,7 +70,7 @@ while IFS= read -r line; do
     if [[ $BODY_STARTED == "false" ]]; then
         if [[ $line == *"[Unreleased]"* ]]; then
             BODY_STARTED="true"
-            echo "## [$VERSION](https://github.com/lexicalunit/spellbot/releases/tag/$VERSION) - $(date +'%Y-%m-%d')" >>"$NEW_CHANGELOG"
+            echo "## [$VERSION](https://github.com/southsidestudio/seer/releases/tag/$VERSION) - $(date +'%Y-%m-%d')" >>"$NEW_CHANGELOG"
         fi
     else
         echo "$line" >>"$NEW_CHANGELOG"
@@ -87,13 +87,13 @@ run "uv build"
 run "git commit -am 'Release $VERSION'"
 
 # make sure that the docker build works before publishing
-TAG="lexicalunit/spellbot"
+TAG="southsidestudio/seer"
 DD_VERSION="$(git rev-parse --short HEAD)"
 run "DOCKER_BUILDKIT=0 docker buildx build --ulimit nofile=1024000:1024000 --build-arg DD_VERSION='$DD_VERSION' --platform linux/arm64 -t '$TAG' ."
 
 # publish the release; assumes you've set up non-interactive publishing previously running:
-# security add-generic-password -s spellbot -a "$USER" -w YOUR-PYPI-TOKEN
-if ! uv publish -n --token "$(security find-generic-password -s spellbot -a "$USER" -w)"; then
+# security add-generic-password -s seer -a "$USER" -w YOUR-PYPI-TOKEN
+if ! uv publish -n --token "$(security find-generic-password -s seer -a "$USER" -w)"; then
     echo "error: publish command failed, see log for details" 1>&2
     run "git reset --hard HEAD~1"
     exit 1
@@ -105,4 +105,4 @@ run "git push --tags origin main"
 
 # push updates to docker hub
 run "docker push '$TAG'"
-echo "Note: Any changes to README.md must be made manually at https://hub.docker.com/r/lexicalunit/spellbot ..."
+echo "Note: Any changes to README.md must be made manually at https://hub.docker.com/r/southsidestudio/seer ..."

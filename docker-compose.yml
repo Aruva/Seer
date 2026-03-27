@@ -34,7 +34,7 @@ services:
   # ── SouthSeer bot ────────────────────────────────────────────────────────────
   bot:
     build: .
-    command: spellbot
+    command: seer
     restart: unless-stopped
     depends_on:
       migrate:
@@ -45,6 +45,28 @@ services:
       # (The value in .env is only used if you run the bot outside of Docker.)
       DATABASE_URL: "postgresql://postgres:postgres@db:5432/southseer"
       DD_TRACE_ENABLED: "false"
+      # Set to "1" to skip command sync on startup (avoids Discord rate limits).
+      # Commands stay registered from the last successful sync.
+      # Remove or set to "" when you need to re-sync (e.g. after adding new commands).
+      # SKIP_COMMAND_SYNC: "1"
+
+  # ── SouthSeer Web API ───────────────────────────────────────────────────────
+  # Serves the REST API used by Arbiter for player search + infractions.
+  api:
+    build: .
+    command: /start-seerapi.sh
+    restart: unless-stopped
+    ports:
+      - "3008:3008"
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+    env_file: .env
+    environment:
+      DATABASE_URL: "postgresql://postgres:postgres@db:5432/southseer"
+      DD_TRACE_ENABLED: "false"
+      HOST: "0.0.0.0"
+      PORT: "3008"
 
 volumes:
   db_data:

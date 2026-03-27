@@ -6,22 +6,22 @@ from unittest.mock import AsyncMock
 import pytest
 import pytest_asyncio
 
-from spellbot.actions import LookingForGameAction
-from spellbot.enums import GameBracket, GameFormat, GameService
+from seer.actions import LookingForGameAction
+from seer.enums import GameBracket, GameFormat, GameService
 from tests.mocks import mock_discord_object
 
 if TYPE_CHECKING:
     import discord
     from pytest_mock import MockerFixture
 
-    from spellbot import SpellBot
-    from spellbot.models import User
+    from seer import Seer
+    from seer.models import User
 
 pytestmark = pytest.mark.use_db
 
 
 @pytest_asyncio.fixture
-async def action(bot: SpellBot, interaction: discord.Interaction) -> LookingForGameAction:
+async def action(bot: Seer, interaction: discord.Interaction) -> LookingForGameAction:
     async with LookingForGameAction.create(bot, interaction) as action:
         return action
 
@@ -94,7 +94,7 @@ class TestLookingForGameAction:
         discord_user = mock_discord_object(user)
         mocker.patch.object(action, "guild", None)
         mocker.patch.object(action.interaction, "user", discord_user)
-        stub = mocker.patch("spellbot.actions.lfg_action.safe_send_user", AsyncMock())
+        stub = mocker.patch("seer.actions.lfg_action.safe_send_user", AsyncMock())
 
         result = await action.execute()
 

@@ -1,9 +1,9 @@
-# Security Groups for SpellBot Infrastructure
+# Security Groups for Seer Infrastructure
 
 # ALB Security Group - Internet facing
 resource "aws_security_group" "alb" {
-  name        = "spellbot-alb-sg"
-  description = "Security group for SpellBot ALB"
+  name        = "seer-alb-sg"
+  description = "Security group for Seer ALB"
   vpc_id      = module.vpc.vpc_id
 
   # Allow HTTP from internet
@@ -34,14 +34,14 @@ resource "aws_security_group" "alb" {
   }
 
   tags = {
-    Name = "spellbot-alb-sg"
+    Name = "seer-alb-sg"
   }
 }
 
 # ECS Tasks Security Group - Application tier
 resource "aws_security_group" "ecs_tasks" {
-  name        = "spellbot-ecs-tasks-sg"
-  description = "Security group for SpellBot ECS tasks"
+  name        = "seer-ecs-tasks-sg"
+  description = "Security group for Seer ECS tasks"
   vpc_id      = module.vpc.vpc_id
 
   # Allow HTTP from ALB
@@ -63,14 +63,14 @@ resource "aws_security_group" "ecs_tasks" {
   }
 
   tags = {
-    Name = "spellbot-ecs-tasks-sg"
+    Name = "seer-ecs-tasks-sg"
   }
 }
 
 # ElastiCache Security Group - Cache tier
 resource "aws_security_group" "elasticache" {
-  name        = "spellbot-elasticache-sg"
-  description = "Security group for SpellBot ElastiCache Valkey"
+  name        = "seer-elasticache-sg"
+  description = "Security group for Seer ElastiCache Valkey"
   vpc_id      = module.vpc.vpc_id
 
   # Allow Valkey from ECS tasks
@@ -92,6 +92,6 @@ resource "aws_security_group" "elasticache" {
   }
 
   tags = {
-    Name = "spellbot-elasticache-sg"
+    Name = "seer-elasticache-sg"
   }
 }

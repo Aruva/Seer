@@ -8,34 +8,34 @@ output "prod_database_name" {
   value       = postgresql_database.prod_db.name
 }
 
-output "stage_spellbot_user" {
-  description = "Username for stage spellbot database user"
-  value       = postgresql_role.stage_spellbot_user.name
+output "stage_seer_user" {
+  description = "Username for stage seer database user"
+  value       = postgresql_role.stage_seer_user.name
 }
 
-output "prod_spellbot_user" {
-  description = "Username for prod spellbot database user"
-  value       = postgresql_role.prod_spellbot_user.name
+output "prod_seer_user" {
+  description = "Username for prod seer database user"
+  value       = postgresql_role.prod_seer_user.name
 }
 
 output "stage_password_secret_arn" {
   description = "ARN of the AWS Secrets Manager secret containing stage database credentials"
-  value       = aws_secretsmanager_secret.stage_spellbot_password.arn
+  value       = aws_secretsmanager_secret.stage_seer_password.arn
 }
 
 output "prod_password_secret_arn" {
   description = "ARN of the AWS Secrets Manager secret containing prod database credentials"
-  value       = aws_secretsmanager_secret.prod_spellbot_password.arn
+  value       = aws_secretsmanager_secret.prod_seer_password.arn
 }
 
 output "stage_password_secret_name" {
   description = "Name of the AWS Secrets Manager secret containing stage database credentials"
-  value       = aws_secretsmanager_secret.stage_spellbot_password.name
+  value       = aws_secretsmanager_secret.stage_seer_password.name
 }
 
 output "prod_password_secret_name" {
   description = "Name of the AWS Secrets Manager secret containing prod database credentials"
-  value       = aws_secretsmanager_secret.prod_spellbot_password.name
+  value       = aws_secretsmanager_secret.prod_seer_password.name
 }
 
 output "stage_connection_info" {
@@ -44,7 +44,7 @@ output "stage_connection_info" {
     host     = var.db_host
     port     = var.db_port
     database = postgresql_database.stage_db.name
-    username = postgresql_role.stage_spellbot_user.name
+    username = postgresql_role.stage_seer_user.name
   }
   sensitive = false
 }
@@ -55,7 +55,7 @@ output "prod_connection_info" {
     host     = var.db_host
     port     = var.db_port
     database = postgresql_database.prod_db.name
-    username = postgresql_role.prod_spellbot_user.name
+    username = postgresql_role.prod_seer_user.name
   }
   sensitive = false
 }

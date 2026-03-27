@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import factory
 
-from spellbot.models import Game
+from seer.models import Game
 
 
 class GameFactory(factory.alchemy.SQLAlchemyModelFactory):

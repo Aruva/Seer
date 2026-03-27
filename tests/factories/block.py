@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import factory
 
-from spellbot.models import Block
+from seer.models import Block
 
 
 class BlockFactory(factory.alchemy.SQLAlchemyModelFactory):

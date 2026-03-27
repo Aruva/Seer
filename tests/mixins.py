@@ -7,8 +7,8 @@ import discord
 import pytest
 from discord.ext import commands
 
-from spellbot.database import DatabaseSession
-from spellbot.models import Channel, Game, Guild, Queue, User
+from seer.database import DatabaseSession
+from seer.models import Channel, Game, Guild, Queue, User
 from tests.mocks import build_message
 
 if TYPE_CHECKING:
@@ -16,8 +16,8 @@ if TYPE_CHECKING:
 
     from discord.app_commands import Command
 
-    from spellbot import SpellBot
-    from spellbot.settings import Settings
+    from seer import Seer
+    from seer.settings import Settings
     from tests.fixtures import Factories
 
 pytestmark = pytest.mark.use_db
@@ -25,7 +25,7 @@ pytestmark = pytest.mark.use_db
 
 class BaseMixin:
     @pytest.fixture(autouse=True)
-    def use_bot(self, bot: SpellBot) -> None:
+    def use_bot(self, bot: Seer) -> None:
         self.bot = bot
 
     @pytest.fixture(autouse=True)
@@ -168,6 +168,6 @@ class InteractionMixin(BaseMixin):
 
 class ContextMixin(BaseMixin):
     @pytest.fixture(autouse=True, name="context")
-    def context_fixture(self, context: commands.Context[SpellBot]) -> commands.Context[SpellBot]:
+    def context_fixture(self, context: commands.Context[Seer]) -> commands.Context[Seer]:
         self.context = context
         return self.context

@@ -4,7 +4,7 @@ from typing import TYPE_CHECKING
 
 import pytest
 
-from spellbot.enums import GameBracket, GameFormat, GameService
+from seer.enums import GameBracket, GameFormat, GameService
 
 if TYPE_CHECKING:
     from tests.fixtures import Factories

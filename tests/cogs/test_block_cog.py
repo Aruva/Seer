@@ -6,19 +6,19 @@ from unittest.mock import ANY, MagicMock, patch
 import pytest
 import pytest_asyncio
 
-from spellbot.cogs import BlockCog
-from spellbot.database import DatabaseSession
-from spellbot.models import Block, User
+from seer.cogs import BlockCog
+from seer.database import DatabaseSession
+from seer.models import Block, User
 from tests.mixins import InteractionMixin
 
 if TYPE_CHECKING:
-    from spellbot import SpellBot
+    from seer import Seer
 
 pytestmark = pytest.mark.use_db
 
 
 @pytest_asyncio.fixture
-async def cog(bot: SpellBot) -> BlockCog:
+async def cog(bot: Seer) -> BlockCog:
     return BlockCog(bot)
 
 
@@ -109,7 +109,7 @@ class TestCogBlock(InteractionMixin):
         self.factories.block.create(user_xid=user.xid, blocked_user_xid=target1.xid)
         self.factories.block.create(user_xid=user.xid, blocked_user_xid=target2.xid)
 
-        with patch("spellbot.actions.block_action.EMBED_DESCRIPTION_SIZE_LIMIT", 20):
+        with patch("seer.actions.block_action.EMBED_DESCRIPTION_SIZE_LIMIT", 20):
             await self.run(cog.blocked)
 
         self.interaction.response.send_message.assert_called_once_with(  # type: ignore
@@ -128,7 +128,7 @@ class TestCogBlock(InteractionMixin):
 
         self.interaction.response.send_message.reset_mock()  # type: ignore
 
-        with patch("spellbot.actions.block_action.EMBED_DESCRIPTION_SIZE_LIMIT", 20):
+        with patch("seer.actions.block_action.EMBED_DESCRIPTION_SIZE_LIMIT", 20):
             await self.run(cog.blocked, page=2)
 
         self.interaction.response.send_message.assert_called_once_with(  # type: ignore

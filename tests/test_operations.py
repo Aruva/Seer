@@ -11,8 +11,8 @@ from aiohttp.client_exceptions import ClientOSError
 from discord.errors import DiscordException
 from discord.utils import MISSING
 
-from spellbot import operations
-from spellbot.operations import (
+from seer import operations
+from seer.operations import (
     VoiceChannelSuggestion,
     retry,
     safe_add_role,
@@ -37,7 +37,7 @@ from spellbot.operations import (
     safe_update_embed,
     safe_update_embed_origin,
 )
-from spellbot.utils import CANT_SEND_CODE
+from seer.utils import CANT_SEND_CODE
 from tests.mixins import InteractionMixin
 from tests.mocks import build_message, mock_client
 
@@ -279,7 +279,7 @@ class TestOperationsCreateCategoryChannel:
         dpy_guild.create_category_channel.assert_called_once_with("name")  # type: ignore
 
     async def test_no_permissions(self, dpy_guild: discord.Guild, mocker: MockerFixture) -> None:
-        mocker.patch("spellbot.operations.bot_can_manage_channels", MagicMock(return_value=False))
+        mocker.patch("seer.operations.bot_can_manage_channels", MagicMock(return_value=False))
         client = mock_client(guilds=[dpy_guild])
         response = await safe_create_category_channel(client, dpy_guild.id, "name")
         dpy_guild.create_category_channel.assert_not_called()  # type: ignore
@@ -514,7 +514,7 @@ class TestOperationsChannelReply:
         channel.send.assert_called_once_with("content", embed=embed)
 
     async def test_can_not_send(self, mocker: MockerFixture) -> None:
-        mocker.patch("spellbot.operations.bot_can_send_messages", MagicMock(return_value=False))
+        mocker.patch("seer.operations.bot_can_send_messages", MagicMock(return_value=False))
         channel = MagicMock(spec=discord.TextChannel)
         channel.send = AsyncMock()
         embed = discord.Embed()

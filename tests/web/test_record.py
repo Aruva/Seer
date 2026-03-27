@@ -5,8 +5,8 @@ from typing import TYPE_CHECKING
 
 import pytest
 
-from spellbot.enums import GameFormat
-from spellbot.models import GameStatus
+from seer.enums import GameFormat
+from seer.models import GameStatus
 
 if TYPE_CHECKING:
     from aiohttp.client import ClientSession

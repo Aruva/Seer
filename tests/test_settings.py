@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import pytest
 
-from spellbot.settings import Settings
+from seer.settings import Settings
 
 
 class TestSettings:

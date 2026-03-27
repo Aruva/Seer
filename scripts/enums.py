@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 from __future__ import annotations
 
-from spellbot.enums import GameBracket, GameFormat, GameService
+from seer.enums import GameBracket, GameFormat, GameService
 
 print("# Brackets\n| Value | Description |\n| --- | --- |")  # noqa: T201
 for bracket in GameBracket:

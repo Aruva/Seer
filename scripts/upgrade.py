@@ -6,7 +6,7 @@ Usage:
 
 Accepts postgresql:// or postgres:// URLs and normalises to the
 psycopg3 driver (postgresql+psycopg://) automatically, matching
-the same logic used in spellbot/settings.py.
+the same logic used in seer/settings.py.
 """
 
 from __future__ import annotations
@@ -17,8 +17,8 @@ from pathlib import Path
 import alembic.command
 import alembic.config
 
-# Inside the Docker image the source tree is at /spellbot/src
-MIGRATIONS_DIR = Path("/spellbot/src/spellbot/migrations")
+# Inside the Docker image the source tree is at /seer/src
+MIGRATIONS_DIR = Path("/seer/src/seer/migrations")
 ALEMBIC_INI = MIGRATIONS_DIR / "alembic.ini"
 
 if len(sys.argv) < 2:

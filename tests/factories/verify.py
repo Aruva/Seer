@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import factory
 
-from spellbot.models import Verify
+from seer.models import Verify
 
 
 class VerifyFactory(factory.alchemy.SQLAlchemyModelFactory):

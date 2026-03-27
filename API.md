@@ -2,7 +2,7 @@
 
 SouthSeer has a public API that can be used to access game and user data. As well as a few authenticated endpoints that can be used to manage game and user data.
 
-**Base URL:** `https://prod.app.southseer.io/`
+**Base URL:** `https://southsidestudioandhobbies.com/api/`
 
 - [Public Endpoints](#public-endpoints)
   - [GET `/`](#get-)

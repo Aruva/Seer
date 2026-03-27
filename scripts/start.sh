@@ -10,16 +10,16 @@ if [[ -n $DD_API_KEY ]] && [[ -n $DD_APP_KEY ]]; then
     echo "running with ddtrace..."
     CMD="ddtrace-run "
 
-    DD_VERSION="$(spellbot --version)"
+    DD_VERSION="$(seer --version)"
     export DD_VERSION
 else
     echo "running without ddtrace..."
 fi
 
-if [[ $SPELL_APP == "spellbot" ]]; then
-    CMD="$CMD spellbot"
+if [[ $SPELL_APP == "seer" ]]; then
+    CMD="$CMD seer"
 elif [[ $SPELL_APP == "spellapi" ]]; then
-    CMD="$CMD gunicorn --workers 4 spellbot.web.server:app --worker-class aiohttp.worker.GunicornWebWorker --bind '$HOST:$PORT' --access-logfile -"
+    CMD="$CMD gunicorn --workers 4 seer.web.server:app --worker-class aiohttp.worker.GunicornWebWorker --bind '$HOST:$PORT' --access-logfile -"
 else
     exit 1
 fi

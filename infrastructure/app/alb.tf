@@ -1,6 +1,6 @@
 # Application Load Balancer
 resource "aws_lb" "main" {
-  name               = "spellbot-alb"
+  name               = "seer-alb"
   internal           = false
   load_balancer_type = "application"
   security_groups    = [aws_security_group.alb.id]
@@ -9,13 +9,13 @@ resource "aws_lb" "main" {
   enable_deletion_protection = false
 
   tags = {
-    Name = "spellbot-alb"
+    Name = "seer-alb"
   }
 }
 
 # Target group for prod
 resource "aws_lb_target_group" "prod" {
-  name                 = "spellbot-prod-tg"
+  name                 = "seer-prod-tg"
   port                 = 80
   protocol             = "HTTP"
   vpc_id               = module.vpc.vpc_id
@@ -35,14 +35,14 @@ resource "aws_lb_target_group" "prod" {
   }
 
   tags = {
-    Name        = "spellbot-prod-tg"
+    Name        = "seer-prod-tg"
     Environment = "prod"
   }
 }
 
 # Target group for stage
 resource "aws_lb_target_group" "stage" {
-  name                 = "spellbot-stage-tg"
+  name                 = "seer-stage-tg"
   port                 = 80
   protocol             = "HTTP"
   vpc_id               = module.vpc.vpc_id
@@ -62,7 +62,7 @@ resource "aws_lb_target_group" "stage" {
   }
 
   tags = {
-    Name        = "spellbot-stage-tg"
+    Name        = "seer-stage-tg"
     Environment = "stage"
   }
 }
@@ -82,7 +82,7 @@ resource "aws_lb_listener" "https" {
   }
 
   tags = {
-    Name = "spellbot-https-listener"
+    Name = "seer-https-listener"
   }
 }
 
@@ -109,7 +109,7 @@ resource "aws_lb_listener_rule" "prod" {
   }
 
   tags = {
-    Name        = "spellbot-prod-rule"
+    Name        = "seer-prod-rule"
     Environment = "prod"
   }
 }
@@ -131,7 +131,7 @@ resource "aws_lb_listener_rule" "stage" {
   }
 
   tags = {
-    Name        = "spellbot-stage-rule"
+    Name        = "seer-stage-rule"
     Environment = "stage"
   }
 }
@@ -153,6 +153,6 @@ resource "aws_lb_listener" "http" {
   }
 
   tags = {
-    Name = "spellbot-http-listener"
+    Name = "seer-http-listener"
   }
 }

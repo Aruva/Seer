@@ -1,6 +1,6 @@
 # Infrastructure
 
-Infrastructure for SpellBot is managed by Terraform. Changes to the infrastructure are deployed manually by running `terraform apply` commands locally. Changes to the source code are deployed automatically by GitHub Actions.
+Infrastructure for Seer is managed by Terraform. Changes to the infrastructure are deployed manually by running `terraform apply` commands locally. Changes to the source code are deployed automatically by GitHub Actions.
 
 ## Verifying changes
 
@@ -14,7 +14,7 @@ tflint --chdir infrastructure/o11y --minimum-failure-severity=error
 
 ## Application (app)
 
-The `app` directory contains the Terraform configuration for the SpellBot application. This includes the AWS resources necessary to run and monitor the application, such as the database resources, ECS cluster, services, and task definitions. etc...
+The `app` directory contains the Terraform configuration for the Seer application. This includes the AWS resources necessary to run and monitor the application, such as the database resources, ECS cluster, services, and task definitions. etc...
 
 ### Application setup
 
@@ -26,7 +26,7 @@ terraform -chdir=infrastructure/app apply  # apply changes (will prompt for conf
 
 ## Observability (o11y)
 
-The `o11y` directory contains the Terraform configuration for SpellBot observability. This includes datadog monitors, dashboards, etc...
+The `o11y` directory contains the Terraform configuration for Seer observability. This includes datadog monitors, dashboards, etc...
 
 ### Observability setup
 
@@ -48,7 +48,7 @@ terraform -chdir=infrastructure/o11y apply  # apply changes (will prompt for con
 
 ## Database (db)
 
-This Terraform configuration sets up the database infrastructure for SpellBot, including:
+This Terraform configuration sets up the database infrastructure for Seer, including:
 
 - Two PostgreSQL databases (stage and prod) on a single PostgreSQL instance
 - Two database users (one for each environment)
@@ -83,35 +83,35 @@ terraform -chdir=infrastructure/db apply  # apply changes (will prompt for confi
 
 #### Databases
 
-- `spellbot_stage` - Database for stage environment
-- `spellbot_prod` - Database for prod environment
+- `seer_stage` - Database for stage environment
+- `seer_prod` - Database for prod environment
 
 #### Users
 
-- `spellbot_stage_user` - Database user for stage environment
-- `spellbot_prod_user` - Database user for prod environment
+- `seer_stage_user` - Database user for stage environment
+- `seer_prod_user` - Database user for prod environment
 
 #### AWS Secrets Manager
 
-- `spellbot/stage/db-password` - Complete connection info for stage
-- `spellbot/prod/db-password` - Complete connection info for prod
+- `seer/stage/db-password` - Complete connection info for stage
+- `seer/prod/db-password` - Complete connection info for prod
 
 Each secret contains a JSON object with:
 
 ```json
 {
-  "username": "spellbot_ENV_user",
+  "username": "seer_ENV_user",
   "password": "generated-password",
-  "database": "spellbot_ENV",
+  "database": "seer_ENV",
   "host": "your-db-host",
   "port": 5432,
-  "DB_URL": "postgresql://spellbot_ENV_user:generated-password@your-db-host:5432/spellbot_ENV"
+  "DB_URL": "postgresql://seer_ENV_user:generated-password@your-db-host:5432/seer_ENV"
 }
 ```
 
 #### Permissions
 
-Each spellbot user gets:
+Each seer user gets:
 
 - `USAGE` and `CREATE` privileges on the public schema
 - `SELECT`, `INSERT`, `UPDATE`, `DELETE` privileges on all tables

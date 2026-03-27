@@ -1,8 +1,8 @@
 # ECS Service - prod
-resource "aws_ecs_service" "spellbot_prod" {
-  name            = "spellbot-prod"
+resource "aws_ecs_service" "seer_prod" {
+  name            = "seer-prod"
   cluster         = aws_ecs_cluster.main.id
-  task_definition = aws_ecs_task_definition.spellbot_prod.arn
+  task_definition = aws_ecs_task_definition.seer_prod.arn
   desired_count   = 1
   launch_type     = "FARGATE"
 
@@ -26,7 +26,7 @@ resource "aws_ecs_service" "spellbot_prod" {
 
   load_balancer {
     target_group_arn = aws_lb_target_group.prod.arn
-    container_name   = "spellbot-gunicorn"
+    container_name   = "seer-gunicorn"
     container_port   = 80
   }
 
@@ -36,16 +36,16 @@ resource "aws_ecs_service" "spellbot_prod" {
   ]
 
   tags = {
-    Name        = "spellbot-prod-service"
+    Name        = "seer-prod-service"
     Environment = "prod"
   }
 }
 
 # ECS Service - stage
-resource "aws_ecs_service" "spellbot_stage" {
-  name            = "spellbot-stage"
+resource "aws_ecs_service" "seer_stage" {
+  name            = "seer-stage"
   cluster         = aws_ecs_cluster.main.id
-  task_definition = aws_ecs_task_definition.spellbot_stage.arn
+  task_definition = aws_ecs_task_definition.seer_stage.arn
   desired_count   = 0
   launch_type     = "FARGATE"
 
@@ -61,7 +61,7 @@ resource "aws_ecs_service" "spellbot_stage" {
 
   load_balancer {
     target_group_arn = aws_lb_target_group.stage.arn
-    container_name   = "spellbot-gunicorn"
+    container_name   = "seer-gunicorn"
     container_port   = 80
   }
 
@@ -71,7 +71,7 @@ resource "aws_ecs_service" "spellbot_stage" {
   ]
 
   tags = {
-    Name        = "spellbot-stage-service"
+    Name        = "seer-stage-service"
     Environment = "stage"
   }
 }

@@ -2,7 +2,7 @@ module "aurora_cluster" {
   source  = "terraform-aws-modules/rds-aurora/aws"
   version = "9.15.0"
 
-  name                        = "spellbot-aurora"
+  name                        = "seer-aurora"
   engine                      = "aurora-postgresql"
   engine_version              = "17.5"
   master_username             = "postgres"

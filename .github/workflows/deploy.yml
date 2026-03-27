@@ -15,8 +15,8 @@ on:
 
 env:
   AWS_REGION: us-east-1
-  ECR_REPOSITORY: spellbot-app
-  ECS_CLUSTER: spellbot-cluster
+  ECR_REPOSITORY: seer-app
+  ECS_CLUSTER: seer-cluster
 
 permissions:
   id-token: write # This is required for requesting the JWT
@@ -44,11 +44,11 @@ jobs:
         id: env-vars
         run: |
           if [[ "${{ inputs.environment }}" == "stage" ]]; then
-            echo "ecs-service=spellbot-stage" >> $GITHUB_OUTPUT
-            echo "task-definition-family=spellbot-stage" >> $GITHUB_OUTPUT
+            echo "ecs-service=seer-stage" >> $GITHUB_OUTPUT
+            echo "task-definition-family=seer-stage" >> $GITHUB_OUTPUT
           elif [[ "${{ inputs.environment }}" == "prod" ]]; then
-            echo "ecs-service=spellbot-prod" >> $GITHUB_OUTPUT
-            echo "task-definition-family=spellbot-prod" >> $GITHUB_OUTPUT
+            echo "ecs-service=seer-prod" >> $GITHUB_OUTPUT
+            echo "task-definition-family=seer-prod" >> $GITHUB_OUTPUT
           else
             echo "Invalid environment: ${{ inputs.environment }}"
             exit 1

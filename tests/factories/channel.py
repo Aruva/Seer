@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import factory
 
-from spellbot.models import Channel
+from seer.models import Channel
 
 
 class ChannelFactory(factory.alchemy.SQLAlchemyModelFactory):

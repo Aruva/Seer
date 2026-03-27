@@ -9,10 +9,10 @@ import pytest
 from discord import app_commands
 from discord.ext.commands import AutoShardedBot, CommandNotFound, Context, UserInputError
 
-from spellbot import SpellBot
-from spellbot.database import DatabaseSession
-from spellbot.enums import GameService
-from spellbot.errors import (
+from seer import Seer
+from seer.database import DatabaseSession
+from seer.enums import GameService
+from seer.errors import (
     AdminOnlyError,
     GuildBannedError,
     GuildOnlyError,
@@ -20,8 +20,8 @@ from spellbot.errors import (
     UserUnverifiedError,
     UserVerifiedError,
 )
-from spellbot.models import Channel, GameDict, GameLinkDetails, Guild, Verify
-from spellbot.utils import handle_interaction_errors
+from seer.models import Channel, GameDict, GameLinkDetails, Guild, Verify
+from seer.utils import handle_interaction_errors
 
 from .mixins import BaseMixin
 
@@ -32,7 +32,7 @@ pytestmark = pytest.mark.use_db
 
 
 @pytest.mark.asyncio
-class TestSpellBot(BaseMixin):
+class TestSeer(BaseMixin):
     @pytest.mark.parametrize(
         ("mock_games", "game", "factory"),
         [
@@ -46,7 +46,7 @@ class TestSpellBot(BaseMixin):
                 False,
                 {"service": GameService.SPELLTABLE.value},
                 "spelltable.generate_link",
-                id="spellbot",
+                id="seer",
             ),
             pytest.param(
                 False,
@@ -70,7 +70,7 @@ class TestSpellBot(BaseMixin):
     )
     async def test_create_create_game_link(
         self,
-        bot: SpellBot,
+        bot: Seer,
         mock_games: bool,
         game: GameDict,
         factory: str | None,
@@ -78,7 +78,7 @@ class TestSpellBot(BaseMixin):
     ) -> None:
         bot.mock_games = mock_games
         if factory:
-            mock = mocker.patch(f"spellbot.client.{factory}", AsyncMock())
+            mock = mocker.patch(f"seer.client.{factory}", AsyncMock())
         response = await bot.create_game_link(game)
         if factory:
             mock.assert_called_once_with(game)
@@ -108,12 +108,12 @@ class TestSpellBot(BaseMixin):
             ),
             pytest.param(
                 UserBannedError(),
-                "You have been banned from using SpellBot.",
+                "You have been banned from using Seer.",
                 id="user-banned",
             ),
             pytest.param(
                 GuildBannedError(),
-                "You have been banned from using SpellBot.",
+                "You have been banned from using Seer.",
                 id="guild-banned",
             ),
             pytest.param(
@@ -148,7 +148,7 @@ class TestSpellBot(BaseMixin):
 
     async def test_on_message_no_guild(
         self,
-        bot: SpellBot,
+        bot: Seer,
         monkeypatch: pytest.MonkeyPatch,
     ) -> None:
         super_on_message_mock = AsyncMock()
@@ -160,7 +160,7 @@ class TestSpellBot(BaseMixin):
 
     async def test_on_message_no_channel_type(
         self,
-        bot: SpellBot,
+        bot: Seer,
         monkeypatch: pytest.MonkeyPatch,
     ) -> None:
         super_on_message_mock = AsyncMock()
@@ -172,7 +172,7 @@ class TestSpellBot(BaseMixin):
         await bot.on_message(message)
         super_on_message_mock.assert_not_called()
 
-    async def test_on_message_hidden(self, bot: SpellBot, monkeypatch: pytest.MonkeyPatch) -> None:
+    async def test_on_message_hidden(self, bot: Seer, monkeypatch: pytest.MonkeyPatch) -> None:
         super_on_message_mock = AsyncMock()
         monkeypatch.setattr(AutoShardedBot, "on_message", super_on_message_mock)
         message = MagicMock()
@@ -186,7 +186,7 @@ class TestSpellBot(BaseMixin):
     async def test_on_message_happy_path(
         self,
         dpy_message: discord.Message,
-        bot: SpellBot,
+        bot: Seer,
         monkeypatch: pytest.MonkeyPatch,
     ) -> None:
         super_on_message_mock = AsyncMock()
@@ -201,7 +201,7 @@ class TestSpellBot(BaseMixin):
     async def test_on_message_delete_happy_path(
         self,
         dpy_message: discord.Message,
-        bot: SpellBot,
+        bot: Seer,
         monkeypatch: pytest.MonkeyPatch,
     ) -> None:
         mock_handle_message_deleted = AsyncMock()
@@ -212,7 +212,7 @@ class TestSpellBot(BaseMixin):
     async def test_on_message_delete_message_without_id(
         self,
         dpy_message: discord.Message,
-        bot: SpellBot,
+        bot: Seer,
         monkeypatch: pytest.MonkeyPatch,
     ) -> None:
         del dpy_message.id
@@ -223,10 +223,10 @@ class TestSpellBot(BaseMixin):
 
     async def test_on_command_error_command_not_found(
         self,
-        bot: SpellBot,
+        bot: Seer,
         monkeypatch: pytest.MonkeyPatch,
     ) -> None:
-        context = MagicMock(spec=Context[SpellBot])
+        context = MagicMock(spec=Context[Seer])
         super_on_message_mock = AsyncMock()
         monkeypatch.setattr(AutoShardedBot, "on_command_error", super_on_message_mock)
         await bot.on_command_error(context, CommandNotFound())
@@ -234,10 +234,10 @@ class TestSpellBot(BaseMixin):
 
     async def test_on_command_error_user_input_error(
         self,
-        bot: SpellBot,
+        bot: Seer,
         monkeypatch: pytest.MonkeyPatch,
     ) -> None:
-        context = MagicMock(spec=Context[SpellBot])
+        context = MagicMock(spec=Context[Seer])
         exception = UserInputError()
         super_on_message_mock = AsyncMock()
         monkeypatch.setattr(AutoShardedBot, "on_command_error", super_on_message_mock)
@@ -247,7 +247,7 @@ class TestSpellBot(BaseMixin):
     async def test_handle_message_deleted_when_game_not_started(
         self,
         dpy_message: discord.Message,
-        bot: SpellBot,
+        bot: Seer,
     ) -> None:
         assert dpy_message.guild
         guild = self.factories.guild.create(xid=dpy_message.guild.id)
@@ -272,7 +272,7 @@ class TestSpellBot(BaseMixin):
     async def test_handle_message_deleted_when_game_is_started(
         self,
         dpy_message: discord.Message,
-        bot: SpellBot,
+        bot: Seer,
     ) -> None:
         assert dpy_message.guild
         guild = self.factories.guild.create(xid=dpy_message.guild.id)
@@ -297,7 +297,7 @@ class TestSpellBot(BaseMixin):
     async def test_handle_message_deleted_when_message_not_found(
         self,
         dpy_message: discord.Message,
-        bot: SpellBot,
+        bot: Seer,
     ) -> None:
         assert dpy_message.guild
         guild = self.factories.guild.create(xid=dpy_message.guild.id)
@@ -321,7 +321,7 @@ class TestSpellBot(BaseMixin):
 
 
 @pytest.mark.asyncio
-class TestSpellBotHandleVerification(BaseMixin):
+class TestSeerHandleVerification(BaseMixin):
     async def test_missing_author_id(self, monkeypatch: pytest.MonkeyPatch) -> None:
         message = MagicMock()
         message.guild = MagicMock()

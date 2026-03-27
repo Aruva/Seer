@@ -9,24 +9,24 @@ import pytest
 import pytest_asyncio
 from sqlalchemy.sql.expression import and_
 
-from spellbot.actions import lfg_action
-from spellbot.cogs import EventsCog
-from spellbot.database import DatabaseSession
-from spellbot.enums import GameFormat, GameService
-from spellbot.models import Game, GameStatus, Guild, Play, User
+from seer.actions import lfg_action
+from seer.cogs import EventsCog
+from seer.database import DatabaseSession
+from seer.enums import GameFormat, GameService
+from seer.models import Game, GameStatus, Guild, Play, User
 from tests.mixins import InteractionMixin
 from tests.mocks import mock_discord_object, mock_operations
 
 if TYPE_CHECKING:
     from collections.abc import Callable
 
-    from spellbot.client import SpellBot
+    from seer.client import Seer
 
 pytestmark = pytest.mark.use_db
 
 
 @pytest.fixture
-def cog(bot: SpellBot) -> EventsCog:
+def cog(bot: Seer) -> EventsCog:
     return EventsCog(bot)
 
 

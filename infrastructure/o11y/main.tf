@@ -8,8 +8,8 @@ terraform {
     }
   }
   backend "s3" {
-    bucket = "spellbot-terraform-state"
-    key    = "spellbot-o11y"
+    bucket = "seer-terraform-state"
+    key    = "seer-o11y"
     region = "us-east-2"
   }
 }
@@ -19,15 +19,15 @@ provider "datadog" {
   app_key = var.datadog_app_key
 }
 
-# SpellBot Alerts
-resource "datadog_monitor" "spellbot_tasks_not_running" {
+# Seer Alerts
+resource "datadog_monitor" "seer_tasks_not_running" {
   on_missing_data     = "default"
   require_full_window = false
   monitor_thresholds {
     critical = 1
   }
-  name    = "SpellBot: Tasks are not running"
-  tags    = ["service:spellbot", "env:prod"]
+  name    = "Seer: Tasks are not running"
+  tags    = ["service:seer", "env:prod"]
   type    = "log alert"
   query   = <<-EOT
     logs("environment:prod "starting task expire_inactive_games"").index("*").rollup("count").last("2h") < 1
@@ -35,7 +35,7 @@ resource "datadog_monitor" "spellbot_tasks_not_running" {
   message = "@${var.alert_email}"
 }
 
-resource "datadog_monitor" "spellbot_application_error" {
+resource "datadog_monitor" "seer_application_error" {
   enable_logs_sample     = true
   groupby_simple_monitor = false
   on_missing_data        = "default"
@@ -43,21 +43,21 @@ resource "datadog_monitor" "spellbot_application_error" {
   monitor_thresholds {
     critical = 1
   }
-  name    = "SpellBot: Application error: {{log.message}}"
+  name    = "Seer: Application error: {{log.message}}"
   type    = "log alert"
-  tags    = ["service:spellbot", "env:prod"]
+  tags    = ["service:seer", "env:prod"]
   query   = <<-EOT
     logs("environment:prod -@aws.awslogs.logStream:datadog/datadog-agent/* -404 -"ELB-HealthChecker" -"Error handling request from" (error OR status:error OR raise)").index("*").rollup("count").last("5m") > 1
   EOT
   message = "@${var.alert_email}"
 }
 
-resource "datadog_monitor" "spellbot_no_data_prod" {
+resource "datadog_monitor" "seer_no_data_prod" {
   require_full_window = false
   monitor_thresholds {
     critical = 0
   }
-  name    = "SpellBot: No data for postgres on env:prod"
+  name    = "Seer: No data for postgres on env:prod"
   type    = "query alert"
   tags    = ["service:postgres", "env:prod"]
   query   = <<-EOT
@@ -66,24 +66,24 @@ resource "datadog_monitor" "spellbot_no_data_prod" {
   message = "@${var.alert_email}"
 }
 
-resource "datadog_monitor" "SpellBot_SpellTable_create_game_issues" {
+resource "datadog_monitor" "Seer_SpellTable_create_game_issues" {
   include_tags        = false
   on_missing_data     = "default"
   require_full_window = false
   monitor_thresholds {
     critical = 8000000000
   }
-  name    = "SpellBot: SpellTable create game issues"
+  name    = "Seer: SpellTable create game issues"
   type    = "trace-analytics alert"
-  tags    = ["env:prod", "service:spellbot"]
+  tags    = ["env:prod", "service:seer"]
   query   = <<-EOT
-    trace-analytics("env:prod service:spellbot operation_name:spellbot.client.create_game_link @link_service:SPELLTABLE").index("trace-search", "djm-search").rollup("avg", "@duration").last("5m") > 8000000000
+    trace-analytics("env:prod service:seer operation_name:seer.client.create_game_link @link_service:SPELLTABLE").index("trace-search", "djm-search").rollup("avg", "@duration").last("5m") > 8000000000
   EOT
   message = "@${var.alert_email}"
 }
 
 # ECS Alerts
-resource "datadog_monitor" "SpellBot_ECS_Tasks_Failed_to_Start_Successfully" {
+resource "datadog_monitor" "Seer_ECS_Tasks_Failed_to_Start_Successfully" {
   evaluation_delay       = 900
   groupby_simple_monitor = false
   new_group_delay        = 60
@@ -92,7 +92,7 @@ resource "datadog_monitor" "SpellBot_ECS_Tasks_Failed_to_Start_Successfully" {
   monitor_thresholds {
     critical = 0
   }
-  name    = "SpellBot: ECS Tasks Failed to Start Successfully"
+  name    = "Seer: ECS Tasks Failed to Start Successfully"
   type    = "event-v2 alert"
   tags    = ["integration:amazon_ecs"]
   query   = <<-EOT
@@ -195,23 +195,23 @@ resource "datadog_monitor" "AWS_ECS_Running_Task_Count_differs_from_Desired_Coun
   EOT
 }
 
-resource "datadog_monitor" "SpellBot_No_traces" {
+resource "datadog_monitor" "Seer_No_traces" {
   no_data_timeframe   = 10
   require_full_window = false
   monitor_thresholds {
     critical = 0
   }
-  name    = "SpellBot: No traces"
+  name    = "Seer: No traces"
   type    = "query alert"
-  tags    = ["service:spellbot", "env:prod"]
+  tags    = ["service:seer", "env:prod"]
   query   = <<-EOT
-    sum(last_5m):sum:trace.interaction.hits{env:prod,service:spellbot,span.kind:internal}.as_rate() <= 0
+    sum(last_5m):sum:trace.interaction.hits{env:prod,service:seer,span.kind:internal}.as_rate() <= 0
   EOT
   message = "@${var.alert_email}"
 }
 
 # Dashboards
-resource "datadog_dashboard" "spellbot_create_game_link_dashboard" {
+resource "datadog_dashboard" "seer_create_game_link_dashboard" {
   title       = "Avg of duration of create_game_link"
   description = "Average duration of create_game_link calls"
   layout_type = "ordered"
@@ -220,7 +220,7 @@ resource "datadog_dashboard" "spellbot_create_game_link_dashboard" {
       request {
         apm_query {
           index        = "*"
-          search_query = "env:prod service:spellbot operation_name:spellbot.client.create_game_link @link_service:SPELLTABLE"
+          search_query = "env:prod service:seer operation_name:seer.client.create_game_link @link_service:SPELLTABLE"
           compute_query {
             aggregation = "avg"
             facet       = "@duration"

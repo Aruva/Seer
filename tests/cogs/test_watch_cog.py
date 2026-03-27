@@ -4,9 +4,9 @@ from typing import TYPE_CHECKING, cast
 
 import pytest
 
-from spellbot.cogs import WatchCog
-from spellbot.database import DatabaseSession
-from spellbot.models import Guild, User, Watch
+from seer.cogs import WatchCog
+from seer.database import DatabaseSession
+from seer.models import Guild, User, Watch
 from tests.mixins import InteractionMixin
 from tests.mocks import mock_discord_object
 
@@ -15,13 +15,13 @@ if TYPE_CHECKING:
 
     import discord
 
-    from spellbot import SpellBot
+    from seer import Seer
 
 pytestmark = pytest.mark.use_db
 
 
 @pytest.fixture
-def cog(bot: SpellBot) -> WatchCog:
+def cog(bot: Seer) -> WatchCog:
     return WatchCog(bot)
 
 

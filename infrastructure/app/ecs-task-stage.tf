@@ -1,6 +1,6 @@
 # ECS Task Definition - stage
-resource "aws_ecs_task_definition" "spellbot_stage" {
-  family                   = "spellbot-stage"
+resource "aws_ecs_task_definition" "seer_stage" {
+  family                   = "seer-stage"
   network_mode             = "awsvpc"
   requires_compatibilities = ["FARGATE"]
   cpu                      = "512"  # .5 vCPU (smaller for stage)
@@ -61,32 +61,32 @@ resource "aws_ecs_task_definition" "spellbot_stage" {
       secrets = [
         {
           name      = "DD_API_KEY"
-          valueFrom = "${aws_secretsmanager_secret.spellbot_stage.arn}:DD_API_KEY::"
+          valueFrom = "${aws_secretsmanager_secret.seer_stage.arn}:DD_API_KEY::"
         },
         {
           name      = "DD_APP_KEY"
-          valueFrom = "${aws_secretsmanager_secret.spellbot_stage.arn}:DD_APP_KEY::"
+          valueFrom = "${aws_secretsmanager_secret.seer_stage.arn}:DD_APP_KEY::"
         }
       ]
 
       logConfiguration = {
         logDriver = "awslogs"
         options = {
-          "awslogs-group"         = aws_cloudwatch_log_group.spellbot_stage.name
+          "awslogs-group"         = aws_cloudwatch_log_group.seer_stage.name
           "awslogs-region"        = "us-east-1"
           "awslogs-stream-prefix" = "datadog"
         }
       }
     },
     {
-      name      = "spellbot"
-      image     = data.aws_ssm_parameter.spellbot_stage_image_uri.value
+      name      = "seer"
+      image     = data.aws_ssm_parameter.seer_stage_image_uri.value
       essential = true
 
       environment = [
         {
           name  = "DD_SERVICE"
-          value = "spellbot"
+          value = "seer"
         },
         {
           name  = "DD_TRACE_AGENT_HOSTNAME"
@@ -124,43 +124,43 @@ resource "aws_ecs_task_definition" "spellbot_stage" {
       secrets = [
         {
           name      = "DD_API_KEY"
-          valueFrom = "${aws_secretsmanager_secret.spellbot_stage.arn}:DD_API_KEY::"
+          valueFrom = "${aws_secretsmanager_secret.seer_stage.arn}:DD_API_KEY::"
         },
         {
           name      = "DD_APP_KEY"
-          valueFrom = "${aws_secretsmanager_secret.spellbot_stage.arn}:DD_APP_KEY::"
+          valueFrom = "${aws_secretsmanager_secret.seer_stage.arn}:DD_APP_KEY::"
         },
         {
           name      = "BOT_TOKEN"
-          valueFrom = "${aws_secretsmanager_secret.spellbot_stage.arn}:BOT_TOKEN::"
+          valueFrom = "${aws_secretsmanager_secret.seer_stage.arn}:BOT_TOKEN::"
         },
         {
           name      = "SPELLTABLE_USERS"
-          valueFrom = "${aws_secretsmanager_secret.spellbot_stage.arn}:SPELLTABLE_USERS::"
+          valueFrom = "${aws_secretsmanager_secret.seer_stage.arn}:SPELLTABLE_USERS::"
         },
         {
           name      = "SPELLTABLE_PASSES"
-          valueFrom = "${aws_secretsmanager_secret.spellbot_stage.arn}:SPELLTABLE_PASSES::"
+          valueFrom = "${aws_secretsmanager_secret.seer_stage.arn}:SPELLTABLE_PASSES::"
         },
         {
           name      = "SPELLTABLE_AUTH_KEY"
-          valueFrom = "${aws_secretsmanager_secret.spellbot_stage.arn}:SPELLTABLE_AUTH_KEY::"
+          valueFrom = "${aws_secretsmanager_secret.seer_stage.arn}:SPELLTABLE_AUTH_KEY::"
         },
         {
           name      = "TABLESTREAM_AUTH_KEY"
-          valueFrom = "${aws_secretsmanager_secret.spellbot_stage.arn}:TABLESTREAM_AUTH_KEY::"
+          valueFrom = "${aws_secretsmanager_secret.seer_stage.arn}:TABLESTREAM_AUTH_KEY::"
         },
         {
           name      = "SPELLTABLE_CLIENT_ID"
-          valueFrom = "${aws_secretsmanager_secret.spellbot_stage.arn}:SPELLTABLE_CLIENT_ID::"
+          valueFrom = "${aws_secretsmanager_secret.seer_stage.arn}:SPELLTABLE_CLIENT_ID::"
         },
         {
           name      = "SPELLTABLE_API_KEY"
-          valueFrom = "${aws_secretsmanager_secret.spellbot_stage.arn}:SPELLTABLE_API_KEY::"
+          valueFrom = "${aws_secretsmanager_secret.seer_stage.arn}:SPELLTABLE_API_KEY::"
         },
         {
           name      = "CONVOKE_API_KEY"
-          valueFrom = "${aws_secretsmanager_secret.spellbot_stage.arn}:CONVOKE_API_KEY::"
+          valueFrom = "${aws_secretsmanager_secret.seer_stage.arn}:CONVOKE_API_KEY::"
         },
         {
           name      = "DATABASE_URL"
@@ -168,15 +168,15 @@ resource "aws_ecs_task_definition" "spellbot_stage" {
         },
         {
           name      = "PATREON_TOKEN"
-          valueFrom = "${aws_secretsmanager_secret.spellbot_stage.arn}:PATREON_TOKEN::"
+          valueFrom = "${aws_secretsmanager_secret.seer_stage.arn}:PATREON_TOKEN::"
         }
       ]
       logConfiguration = {
         logDriver = "awslogs"
         options = {
-          "awslogs-group"         = aws_cloudwatch_log_group.spellbot_stage.name
+          "awslogs-group"         = aws_cloudwatch_log_group.seer_stage.name
           "awslogs-region"        = "us-east-1"
-          "awslogs-stream-prefix" = "spellbot"
+          "awslogs-stream-prefix" = "seer"
         }
       }
 
@@ -188,9 +188,9 @@ resource "aws_ecs_task_definition" "spellbot_stage" {
       ]
     },
     {
-      name      = "spellbot-gunicorn"
+      name      = "seer-gunicorn"
       command   = ["./start.sh", "spellapi"]
-      image     = data.aws_ssm_parameter.spellbot_stage_image_uri.value
+      image     = data.aws_ssm_parameter.seer_stage_image_uri.value
       essential = true
 
       portMappings = [
@@ -238,11 +238,11 @@ resource "aws_ecs_task_definition" "spellbot_stage" {
       secrets = [
         {
           name      = "DD_API_KEY"
-          valueFrom = "${aws_secretsmanager_secret.spellbot_stage.arn}:DD_API_KEY::"
+          valueFrom = "${aws_secretsmanager_secret.seer_stage.arn}:DD_API_KEY::"
         },
         {
           name      = "DD_APP_KEY"
-          valueFrom = "${aws_secretsmanager_secret.spellbot_stage.arn}:DD_APP_KEY::"
+          valueFrom = "${aws_secretsmanager_secret.seer_stage.arn}:DD_APP_KEY::"
         },
         {
           name      = "DATABASE_URL"
@@ -253,7 +253,7 @@ resource "aws_ecs_task_definition" "spellbot_stage" {
       logConfiguration = {
         logDriver = "awslogs"
         options = {
-          "awslogs-group"         = aws_cloudwatch_log_group.spellbot_stage.name
+          "awslogs-group"         = aws_cloudwatch_log_group.seer_stage.name
           "awslogs-region"        = "us-east-1"
           "awslogs-stream-prefix" = "gunicorn"
         }
@@ -269,7 +269,7 @@ resource "aws_ecs_task_definition" "spellbot_stage" {
   ])
 
   tags = {
-    Name        = "spellbot-stage-task-definition"
+    Name        = "seer-stage-task-definition"
     Environment = "stage"
   }
 }

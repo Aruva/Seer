@@ -7,13 +7,13 @@ import discord
 import pytest
 import pytest_asyncio
 
-from spellbot.actions import admin_action
-from spellbot.cogs import AdminCog
-from spellbot.database import DatabaseSession
-from spellbot.enums import GameBracket, GameFormat, GameService
-from spellbot.errors import AdminOnlyError
-from spellbot.models import Channel, Game, Guild, GuildAward
-from spellbot.views import SetupView
+from seer.actions import admin_action
+from seer.cogs import AdminCog
+from seer.database import DatabaseSession
+from seer.enums import GameBracket, GameFormat, GameService
+from seer.errors import AdminOnlyError
+from seer.models import Channel, Game, Guild, GuildAward
+from seer.views import SetupView
 from tests.mixins import InteractionMixin
 from tests.mocks import mock_discord_user, mock_operations
 
@@ -22,19 +22,19 @@ if TYPE_CHECKING:
 
     from pytest_mock import MockerFixture
 
-    from spellbot.client import SpellBot
+    from seer.client import Seer
     from tests.fixtures import Factories
 
 pytestmark = pytest.mark.use_db
 
 
 @pytest_asyncio.fixture
-async def cog(bot: SpellBot) -> AdminCog:
+async def cog(bot: Seer) -> AdminCog:
     return AdminCog(bot)
 
 
 @pytest_asyncio.fixture
-async def view(bot: SpellBot) -> SetupView:
+async def view(bot: Seer) -> SetupView:
     return SetupView(bot)
 
 
@@ -86,9 +86,9 @@ class TestCogAdminSetup(InteractionMixin):
         assert self.last_send_message("embed") == {
             "color": self.settings.INFO_EMBED_COLOR,
             "description": (
-                "These are the current settings for SpellBot on this server. "
+                "These are the current settings for Seer on this server. "
                 "Please use the buttons below, as well as the `/set` commands, "
-                "to setup SpellBot as you wish.\n\n"
+                "to setup Seer as you wish.\n\n"
                 "You may also view Awards configuration using the `/awards` "
                 "command and Channels configuration using the `/channels` command."
             ),
@@ -99,7 +99,7 @@ class TestCogAdminSetup(InteractionMixin):
                 {"inline": True, "name": "Use Max Bitrate", "value": "❌ Off"},
             ],
             "thumbnail": {"url": self.settings.ICO_URL},
-            "title": f"SpellBot Setup for {self.guild.name}",
+            "title": f"Seer Setup for {self.guild.name}",
             "type": "rich",
             "flags": 0,
         }
@@ -109,7 +109,7 @@ class TestCogAdminSetup(InteractionMixin):
 class TestSetupView(InteractionMixin):
     @pytest_asyncio.fixture
     async def admin(self, factories: Factories, mocker: MockerFixture) -> discord.User:
-        mocker.patch("spellbot.views.setup_view.is_admin", MagicMock(return_value=True))
+        mocker.patch("seer.views.setup_view.is_admin", MagicMock(return_value=True))
         return mock_discord_user(factories.user.create())
 
     @pytest_asyncio.fixture
@@ -247,9 +247,9 @@ class TestCogAdminSetupView(InteractionMixin):
         assert self.last_edit_message("embed") == {
             "color": self.settings.INFO_EMBED_COLOR,
             "description": (
-                "These are the current settings for SpellBot on this server. "
+                "These are the current settings for Seer on this server. "
                 "Please use the buttons below, as well as the `/set` commands, "
-                "to setup SpellBot as you wish.\n\n"
+                "to setup Seer as you wish.\n\n"
                 "You may also view Awards configuration using the `/awards` "
                 "command and Channels configuration using the `/channels` command."
             ),
@@ -260,7 +260,7 @@ class TestCogAdminSetupView(InteractionMixin):
                 {"inline": True, "name": "Use Max Bitrate", "value": "❌ Off"},
             ],
             "thumbnail": {"url": self.settings.ICO_URL},
-            "title": f"SpellBot Setup for {self.guild.name}",
+            "title": f"Seer Setup for {self.guild.name}",
             "type": "rich",
             "flags": 0,
         }
@@ -304,9 +304,9 @@ class TestCogAdminInfo(InteractionMixin):
             "fields": [
                 {"inline": True, "name": "Format", "value": "Commander"},
                 {"inline": True, "name": "Updated at", "value": ANY},
-                {"inline": False, "name": "Support SpellBot", "value": ANY},
+                {"inline": False, "name": "Support Seer", "value": ANY},
             ],
-            "footer": {"text": f"SpellBot Game ID: #SB{game.id} — Service: SpellTable"},
+            "footer": {"text": f"Seer Game ID: #SB{game.id} — Service: SpellTable"},
             "thumbnail": {"url": self.settings.THUMB_URL},
             "title": "**Waiting for 4 more players to join...**",
             "type": "rich",
@@ -619,7 +619,7 @@ class TestCogAdminAwards(InteractionMixin):
                 f" games_ — give `@{award3.role}` — {award3.message}\n"
             ),
             "thumbnail": {"url": self.settings.ICO_URL},
-            "title": f"SpellBot Player Awards for {self.guild.name}",
+            "title": f"Seer Player Awards for {self.guild.name}",
             "type": "rich",
             "flags": 0,
         }
@@ -641,7 +641,7 @@ class TestCogAdminAwards(InteractionMixin):
                 "To add awards use the `/award add` command."
             ),
             "thumbnail": {"url": self.settings.ICO_URL},
-            "title": f"SpellBot Player Awards for {self.guild.name}",
+            "title": f"Seer Player Awards for {self.guild.name}",
             "type": "rich",
             "flags": 0,
         }

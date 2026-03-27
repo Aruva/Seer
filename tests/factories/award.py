@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import factory
 
-from spellbot.models import GuildAward, UserAward
+from seer.models import GuildAward, UserAward
 
 
 class GuildAwardFactory(factory.alchemy.SQLAlchemyModelFactory):

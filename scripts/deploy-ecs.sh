@@ -2,7 +2,7 @@
 
 # AWS ECS Deployment Script
 # Usage: ./deploy-ecs.sh <image-uri> <environment>
-# Example: ./deploy-ecs.sh 123456789.dkr.ecr.us-east-1.amazonaws.com/spellbot-app:abc123 stage
+# Example: ./deploy-ecs.sh 123456789.dkr.ecr.us-east-1.amazonaws.com/seer-app:abc123 stage
 
 set -euo pipefail
 
@@ -33,7 +33,7 @@ warning() {
 # Check if required arguments are provided
 if [[ $# -lt 2 ]]; then
     error "Usage: $0 <image-uri> <environment>"
-    error "Example: $0 123456789.dkr.ecr.us-east-1.amazonaws.com/spellbot-app:abc123 stage"
+    error "Example: $0 123456789.dkr.ecr.us-east-1.amazonaws.com/seer-app:abc123 stage"
     exit 1
 fi
 
@@ -48,17 +48,17 @@ fi
 
 # Set environment-specific variables
 if [[ "$ENVIRONMENT" == "stage" ]]; then
-    ECS_SERVICE="spellbot-stage"
-    ECS_TASK_DEFINITION_FAMILY="spellbot-stage"
-    SSM_PARAMETER_NAME="/spellbot/stage/ecr-image-uri"
+    ECS_SERVICE="seer-stage"
+    ECS_TASK_DEFINITION_FAMILY="seer-stage"
+    SSM_PARAMETER_NAME="/seer/stage/ecr-image-uri"
 else
-    ECS_SERVICE="spellbot-prod"
-    ECS_TASK_DEFINITION_FAMILY="spellbot-prod"
-    SSM_PARAMETER_NAME="/spellbot/prod/ecr-image-uri"
+    ECS_SERVICE="seer-prod"
+    ECS_TASK_DEFINITION_FAMILY="seer-prod"
+    SSM_PARAMETER_NAME="/seer/prod/ecr-image-uri"
 fi
 
 # Default values (can be overridden by environment variables)
-ECS_CLUSTER="${ECS_CLUSTER:-spellbot-cluster}"
+ECS_CLUSTER="${ECS_CLUSTER:-seer-cluster}"
 AWS_REGION="${AWS_REGION:-us-east-1}"
 
 log "Starting deployment for $ENVIRONMENT environment"
@@ -121,7 +121,7 @@ success "Current task definition retrieved"
 log "Updating task definition with new image..."
 UPDATED_TASK_DEF=$(echo "$CURRENT_TASK_DEF" | jq --arg IMAGE "$IMAGE_URI" '
     .containerDefinitions |= map(
-        if .name == "spellbot" or .name == "spellbot-gunicorn" then
+        if .name == "seer" or .name == "seer-gunicorn" then
             .image = $IMAGE
         else
             .

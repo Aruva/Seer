@@ -34,20 +34,20 @@ For more details on managing the database, see [our database documentation](./DA
 
 ## Running the application
 
-Make sure that you have [set up your environmental variables](/README.md#-running-spellbot-yourself).
+Make sure that you have [set up your environmental variables](/README.md#-running-seer-yourself).
 
 If you wish, you can use a [.env file](https://pypi.org/project/python-dotenv/). Copy the `.env.example` file to get started.
 
 When your environmental variables are set, run:
 
 ```shell
-uv run spellbot --help
+uv run seer --help
 ```
 
 This will list some useful flags you can provide to run SouthSeer. To get started developing, run:
 
 ```shell
-uv run spellbot --dev
+uv run seer --dev
 ```
 
 This will start SouthSeer and reload it whenever the source code changes.
@@ -98,7 +98,7 @@ directory to help. To use it you will need to have non-interactive
 uv publish --token "YOUR-PYPI-TOKEN-GOES-HERE"
 ```
 
-If you don't have one, you can create your PyPI token for this command by going to the [PyPI settings for spellbot](https://pypi.org/manage/project/spellbot/settings/) and clicking on the `Create a token for spellbot` button there. Of course you will have to be a collaborator for this project on PyPI to be able to do this. Contact [spellbot@lexicalunit.com](mailto:spellbot@lexicalunit.com) to be added to the project.
+If you don't have one, you can create your PyPI token for this command by going to the [PyPI settings for seer](https://pypi.org/manage/project/seer/settings/) and clicking on the `Create a token for seer` button there. Of course you will have to be a collaborator for this project on PyPI to be able to do this. Contact the Southside Studio and Hobbies team to be added to the project.
 
 Once you have that set up, you can release a new version by running:
 
@@ -114,7 +114,7 @@ You must select either `major`, `minor`, or `patch` as the release kind. Please 
 
 ### Manually
 
-To release a new version of `spellbot`, use `uv`:
+To release a new version of `seer`, use `uv`:
 
 ```shell
 uv version --bump [major|minor|patch]
@@ -136,7 +136,7 @@ You can get the `M.N.P` version numbers from `pyproject.toml` after you've run t
 grep "^version" < pyproject.toml | cut -d= -f2 | sed 's/"//g;s/ //g;s/^/v/;'
 ```
 
-After publishing you can view the package at its [pypi.org project page](https://pypi.org/project/spellbot/) to see that everything looks good.
+After publishing you can view the package at its [pypi.org project page](https://pypi.org/project/seer/) to see that everything looks good.
 
 [ruff]: https://docs.astral.sh/ruff/
 [discord-dev]: https://discord.com/developers/applications

@@ -4,10 +4,10 @@ from typing import TYPE_CHECKING
 
 import pytest
 
-from spellbot.services import VerifiesService
+from seer.services import VerifiesService
 
 if TYPE_CHECKING:
-    from spellbot.models import Guild
+    from seer.models import Guild
     from tests.fixtures import Factories
 
 pytestmark = pytest.mark.use_db

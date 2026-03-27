@@ -6,25 +6,25 @@ from unittest.mock import ANY
 import pytest
 import pytest_asyncio
 
-from spellbot.actions import leave_action
-from spellbot.cogs import LeaveGameCog
-from spellbot.database import DatabaseSession
-from spellbot.models import Queue
-from spellbot.views.lfg_view import GameView
+from seer.actions import leave_action
+from seer.cogs import LeaveGameCog
+from seer.database import DatabaseSession
+from seer.models import Queue
+from seer.views.lfg_view import GameView
 from tests.mixins import InteractionMixin
 from tests.mocks import mock_operations
 
 if TYPE_CHECKING:
     import discord
 
-    from spellbot.client import SpellBot
-    from spellbot.models import Game, User
+    from seer.client import Seer
+    from seer.models import Game, User
 
 pytestmark = pytest.mark.use_db
 
 
 @pytest_asyncio.fixture
-async def cog(bot: SpellBot) -> LeaveGameCog:
+async def cog(bot: Seer) -> LeaveGameCog:
     return LeaveGameCog(bot)
 
 
@@ -65,9 +65,9 @@ class TestCogLeaveGame(InteractionMixin):
                     {"inline": False, "name": "Players", "value": f"• <@{p2.xid}> ({p2.name})"},
                     {"inline": True, "name": "Format", "value": "Commander"},
                     {"inline": True, "name": "Updated at", "value": ANY},
-                    {"inline": False, "name": "Support SpellBot", "value": ANY},
+                    {"inline": False, "name": "Support Seer", "value": ANY},
                 ],
-                "footer": {"text": f"SpellBot Game ID: #SB{self.game.id} — Service: SpellTable"},
+                "footer": {"text": f"Seer Game ID: #SB{self.game.id} — Service: SpellTable"},
                 "thumbnail": {"url": self.settings.THUMB_URL},
                 "title": "**Waiting for 3 more players to join...**",
                 "type": "rich",
@@ -130,9 +130,9 @@ class TestCogLeaveGame(InteractionMixin):
                     {"inline": False, "name": "Players", "value": f"• <@{p2.xid}> ({p2.name})"},
                     {"inline": True, "name": "Format", "value": "Commander"},
                     {"inline": True, "name": "Updated at", "value": ANY},
-                    {"inline": False, "name": "Support SpellBot", "value": ANY},
+                    {"inline": False, "name": "Support Seer", "value": ANY},
                 ],
-                "footer": {"text": f"SpellBot Game ID: #SB{self.game.id} — Service: SpellTable"},
+                "footer": {"text": f"Seer Game ID: #SB{self.game.id} — Service: SpellTable"},
                 "thumbnail": {"url": self.settings.THUMB_URL},
                 "title": "**Waiting for 3 more players to join...**",
                 "type": "rich",
@@ -308,9 +308,9 @@ class TestCogLeaveGame(InteractionMixin):
                     {"inline": False, "name": "Players", "value": f"• <@{p2.xid}> ({p2.name})"},
                     {"inline": True, "name": "Format", "value": "Commander"},
                     {"inline": True, "name": "Updated at", "value": ANY},
-                    {"inline": False, "name": "Support SpellBot", "value": ANY},
+                    {"inline": False, "name": "Support Seer", "value": ANY},
                 ],
-                "footer": {"text": f"SpellBot Game ID: #SB{self.game.id} — Service: SpellTable"},
+                "footer": {"text": f"Seer Game ID: #SB{self.game.id} — Service: SpellTable"},
                 "thumbnail": {"url": self.settings.THUMB_URL},
                 "title": "**Waiting for 3 more players to join...**",
                 "type": "rich",

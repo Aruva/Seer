@@ -17,7 +17,7 @@ The words of which the initial letter is capitalized have meanings defined under
 For the purposes of this Privacy Policy:
 
 - **Account** means a unique account created for You to access our Service or parts of our Service.
-- **Application** means the software program provided by the @lexicalunit, named SouthSeer.
+- **Application** means the software program provided by Southside Studio and Hobbies, named SouthSeer.
 - **Device** means any device that can access the Service such as a computer, a cellphone or a digital tablet.
 - **Personal Data** is any information that relates to an identified or identifiable individual.
 - **Service** refers to the Application.
@@ -112,4 +112,4 @@ You are advised to review this Privacy Policy periodically for any changes. Chan
 
 ## Contact Us
 
-If you have any questions about this Privacy Policy, You can contact us by email at spellbot@lexicalunit.com.
+If you have any questions about this Privacy Policy, You can contact us by email at info@southsidestudioandhobbies.com.

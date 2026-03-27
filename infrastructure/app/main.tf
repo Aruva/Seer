@@ -9,8 +9,8 @@ terraform {
     }
   }
   backend "s3" {
-    bucket = "spellbot-terraform-state"
-    key    = "spellbot-infra"
+    bucket = "seer-terraform-state"
+    key    = "seer-infra"
     region = "us-east-2"
   }
 }
@@ -21,7 +21,7 @@ provider "aws" {
     tags = {
       Terraform   = "true"
       Environment = "shared"
-      App         = "spellbot"
+      App         = "seer"
     }
   }
 }

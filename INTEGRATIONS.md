@@ -1,10 +1,10 @@
 # Integrations with external services
 
-At the time of this writing SpellBot can create games on [SpellTable][spelltable], Convoke[convoke], and [TableStream][tablestream]. This document explains how to add support for additional services.
+At the time of this writing Seer can create games on [SpellTable][spelltable], Convoke[convoke], and [TableStream][tablestream]. This document explains how to add support for additional services.
 
 ## Update the GameService enum
 
-In `src/spellbot/enums.py` add a new entry to the `GameService` enum. For example:
+In `src/seer/enums.py` add a new entry to the `GameService` enum. For example:
 
 ```python
 class GameService(Enum):
@@ -28,7 +28,7 @@ Then update the `GAME_SERVICE_ORDER` list to include the new service. This list 
 
 ## Update the create_game_link() function
 
-In `src/spellbot/client.py` there is a `create_game_link()` function. Add a new `case` statement to the function to handle the new service. For example:
+In `src/seer/client.py` there is a `create_game_link()` function. Add a new `case` statement to the function to handle the new service. For example:
 
 ```python
 from .integrations import new_service  # <-- add this import (you will need to create this)
@@ -46,13 +46,13 @@ At the time of this writing the `GameLinkDetails` only supports `link` and optio
 
 ## Implement the generate_link() function
 
-Create a new file in `src/spellbot/` for your service. For example `src/spellbot/integrations/new_service.py`. In that file implement the `generate_link()` function. Please use `httpx.AsyncClient` for all requests.
+Create a new file in `src/seer/` for your service. For example `src/seer/integrations/new_service.py`. In that file implement the `generate_link()` function. Please use `httpx.AsyncClient` for all requests.
 
 > **IMPORTANT**: Ensure that all requests are made asynchronously! If you do not do this you will block the event loop and the bot will become unresponsive.
 
 ## Handle your service in the Game model
 
-In `src/spellbot/models/game.py` there is a `Game` model which represents games managed by SpellBot. Of particular interest is the `to_embed()` function (and various related functions) which you may need to update to properly handle your new service, especially if you added additional information to the `GameLinkDetails` class.
+In `src/seer/models/game.py` there is a `Game` model which represents games managed by Seer. Of particular interest is the `to_embed()` function (and various related functions) which you may need to update to properly handle your new service, especially if you added additional information to the `GameLinkDetails` class.
 
 ## Update the test suite
 
